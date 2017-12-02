@@ -1,0 +1,26 @@
+Rig up landing page and basic SCSS with StaticPages.
+Throw in About/Info pages and make sure routes handle them correctly.
+
+INTEGRATION TESTS
+
+Introduce the User model/controller and configure CRUD
+Make pages to utilize said User CRUD
+
+TEST ALL OF THE ABOVE, making sure only logged in users can do certain things to only themselves.
+
+Introduce Admin userlevel and functions
+Create pages only Admins can see (The run validation queue, for example)
+
+TEST RIGOROUSLY to make sure only Admins can do certain things, and users can't promote themselves (Admins are to be set in console... maybe) [Research topic]
+
+Introduce the Games model/controller
+TDD Time!
+Make page templates for Games and include fancy SCSS. Plan with style overrides in mind depending on what page is being displayed.
+
+INTEGRATION TESTS PART DEUX- Is the right CSS being used for the right games? Ori would be a good candidate for this.
+
+Introduce the Speedruns model/controller
+TDD Time! Make sure the right runs come up for the right games.
+Logic logic logic! Remember how Ruby does switches (that is to say, cases) and format db retrievals based on that. Use seeds to your advantage.
+
+TESTS GALORE! Make sure if a user dies, their runs go with it, but NOT ALL RUNS FOR A GAME! That said, if a Game dies, all of it's runs die regardless of Users.
