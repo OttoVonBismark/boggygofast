@@ -1,0 +1,34 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* This sheet styles all the other (custom) sheets. Rules defined here may be overridden as needed. */
+
+/* Mixins, Variables, etc. */
+
+@mixin box_sizing {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+/* Universal */
+
+body {
+    padding-top: 60px;
+}
+
+section {
+    overflow: auto;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.center {
+    text-align: center;
+    h1 {
+        margin-bottom: 10px;
+    }
+}
