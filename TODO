@@ -1,8 +1,3 @@
-Rig up landing page and basic SCSS with StaticPages.
-Throw in About/Info pages and make sure routes handle them correctly.
-
-INTEGRATION TESTS
-
 Introduce the User model/controller and configure CRUD
 Make pages to utilize said User CRUD
 
