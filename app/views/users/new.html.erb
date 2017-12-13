@@ -1,0 +1,9 @@
+<% provide(:title, 'Sign up') %>
+<h1>Sign up</h1>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <% # See how I pass along the button text variable to the partial? This is how you do such a thing. Locals defines vars local to the partial. %>
+        <%= render :partial => 'users/form_user', :locals => {:button_text => 'Create my account'} %> 
+    </div>
+</div>
