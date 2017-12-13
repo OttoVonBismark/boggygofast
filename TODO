@@ -3,6 +3,8 @@ Make pages to utilize said User CRUD
 
 TEST ALL OF THE ABOVE, making sure only logged in users can do certain things to only themselves.
 
+Create Sessions controller/routes/etc. so that user logins can persist across sessions.
+
 Introduce Admin userlevel and functions
 Create pages only Admins can see (The run validation queue, for example)
 
