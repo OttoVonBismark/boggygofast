@@ -1,6 +1,4 @@
-Create Sessions controller/routes/etc. so that user logins can persist across sessions.
-
-TEST EVERYTHING! Creating users, logging in, making sure only logged in users can do certain things to only themselves.
+Fix the test unit so it doesn't duplicate output and drive me insane.
 
 Introduce Admin userlevel and functions
 Create pages only Admins can see (The run validation queue, for example)
