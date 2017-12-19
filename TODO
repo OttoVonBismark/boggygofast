@@ -1,5 +1,3 @@
-Fix the test unit so it doesn't duplicate output and drive me insane.
-
 Introduce Admin userlevel and functions
 Create pages only Admins can see (The run validation queue, for example)
 
