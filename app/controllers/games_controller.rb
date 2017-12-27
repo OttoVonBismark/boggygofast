@@ -41,7 +41,7 @@ class GamesController < ApplicationController
     flash[:success] = "Game deleted successfully"
     redirect_to games_url
   end
-
+  
 
 
   private
