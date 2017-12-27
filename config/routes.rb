@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   get     '/games',     to: 'games#index'
 
   post    '/login',     to: 'sessions#create'
+  post    '/games/new', to: 'games#create'
 
   delete  '/logout',    to: 'sessions#destroy'
 
   resources :users
-  resources :games # Research me~
+  resources :games
   
 end

@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-    attr_accessible :name, :slug
+    attr_accessor :name, :slug
 
     validates_presence_of :slug
     
