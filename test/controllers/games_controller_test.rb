@@ -10,6 +10,8 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:archer)
   end
 
+  # This also tests to make sure my begin/rescue block works, since current_user.admin? (for the delete link) doesn't exist unless the viewer logs in,
+  # causing a NoMethod Error and NilClass exception otherwise.
   test "should get index" do
     get games_index_path
     assert_response :success

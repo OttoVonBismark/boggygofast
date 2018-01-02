@@ -1,6 +1,10 @@
 <li>
     <%= link_to game.name, game %>
-    <% if current_user.admin? %>
-        | <%= link_to "Delete", game_path(game.slug), method: :delete, data: {confirm: "Are you sure?"} %>
+    <% begin %>
+        <% if current_user.admin? %>
+            | <%= link_to "Delete", game_path(game.slug), method: :delete, data: {confirm: "Are you sure?"} %>
+        <% end %>
+    <% rescue %> 
+        <% nil %>
     <% end %>
 </li>
