@@ -11,22 +11,22 @@ class UserTest < ActiveSupport::TestCase
     
     test "name should be present" do
         @user.name = ""
-        assert_not @user.valid?
+        refute @user.valid?
     end
     
     test "email should be present" do
         @user.email = ""
-        assert_not @user.valid?
+        refute @user.valid?
     end
     
     test "name should not be too long" do
         @user.name = "a" * 51
-        assert_not @user.valid?
+        refute @user.valid?
     end 
     
     test "email should not be too long" do
         @user.email = "a" * 244 + "@example.com"
-        assert_not @user.valid?
+        refute @user.valid?
     end
     
     test "email validation should accept valid addresses" do
@@ -41,7 +41,7 @@ class UserTest < ActiveSupport::TestCase
         invalid_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
         invalid_addresses.each do |invalid_address|
             @user.email = invalid_address
-            assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
+            refute @user.valid?, "#{invalid_address.inspect} should be invalid"
         end
     end
     
@@ -49,7 +49,7 @@ class UserTest < ActiveSupport::TestCase
         duplicate_user = @user.dup
         duplicate_user.email = @user.email.upcase
         @user.save
-        assert_not duplicate_user.valid?
+        refute duplicate_user.valid?
     end
     
     test "email addresses should be saved as lower-case" do
@@ -61,17 +61,17 @@ class UserTest < ActiveSupport::TestCase
     
     test "passwords should be present (non-blank)" do
         @user.password = @user.password_confirmation = " " * 6
-        assert_not @user.valid?
+        refute @user.valid?
     end
       
     test "password should have a minimum length" do
         @user.password = @user.password_confirmation = "a" * 5
-        assert_not @user.valid?
+        refute @user.valid?
     end
     
     # Dude's logged in on two browsers, logs out on one, but not the other. User closes other browser and reopens. App thinks they're logged in, but
     # the remember_digest is nil from the first logout. Mass confusion. Let's simulate it! (Multi-session bug #2)
     test "authenticated? should return false for a user with nil digest" do
-        assert_not @user.authenticated?(:remember, '')
+        refute @user.authenticated?(:remember, '')
     end
 end

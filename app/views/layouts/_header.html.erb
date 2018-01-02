@@ -4,6 +4,7 @@
         <nav>
             <ul class= "nav navbar-nav navbar-right">
                 <li><%= link_to "Home", root_path %></li>
+                <li><%= link_to "Games", games_index_path %></li>
                 <% if logged_in? %>
                     <li><%= link_to "Users", users_path %></li>
                     <li class="dropdown">
@@ -15,6 +16,9 @@
                             <li><%= link_to "Log out", logout_path, method: :delete %></li>
                         </ul>
                     </li>
+                    <% if current_user.admin? %>
+                        <li><%= link_to "Administration", adminland_path %></li>
+                    <% end %>
                 <% else %>
                     <li><%= link_to "Log in", login_path %></li>
                 <% end %>

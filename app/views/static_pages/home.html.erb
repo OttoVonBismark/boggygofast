@@ -1,4 +1,6 @@
 <div class="center jumbotron">
     <h1>Welcome to Boggy Go Fast!</h1>
-    <h2>Content goes here as soon as I am done creating it.</h2>
+    <% if !logged_in? %>
+        <h2>New around here? Why not <%= link_to "register?", new_user_path %></h2>
+    <% end %>
 </div>

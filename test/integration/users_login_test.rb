@@ -10,7 +10,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
         assert_template 'sessions/new'
         post login_path, params: {session: {email: "", password: ""}}
         assert_template 'sessions/new'
-        assert_not flash.empty?
+        refute flash.empty?
         get root_path
         assert flash.empty?
     end
@@ -26,7 +26,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
         assert_select "a[href=?]", logout_path
         assert_select "a[href=?]", user_path(@user)
         delete logout_path
-        assert_not is_logged_in?
+        refute is_logged_in?
         assert_redirected_to root_url
         # Simulate a user clicking logout in a second window. (Multi-session bug #1)
         delete logout_path
@@ -38,7 +38,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     
     test "login with remembering" do
         log_in_as(@user, remember_me: '1')
-        assert_not_empty cookies['remember_token']
+        refute_empty cookies['remember_token']
     end
     
     test "login without remembering" do
