@@ -71,7 +71,7 @@ class UserTest < ActiveSupport::TestCase
     
     # Dude's logged in on two browsers, logs out on one, but not the other. User closes other browser and reopens. App thinks they're logged in, but
     # the remember_digest is nil from the first logout. Mass confusion. Let's simulate it! (Multi-session bug #2)
-    test "authenticated? shoudl return false for a user with nil digest" do
+    test "authenticated? should return false for a user with nil digest" do
         assert_not @user.authenticated?(:remember, '')
     end
 end

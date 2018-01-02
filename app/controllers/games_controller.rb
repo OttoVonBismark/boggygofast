@@ -18,7 +18,7 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     if @game.save
       flash[:info] = "Game added successfully. Using default CSS until you code otherwise."
-      redirect_to games_url
+      redirect_to games_index_url
     else
       render 'new'
     end
@@ -37,7 +37,7 @@ class GamesController < ApplicationController
   end
 
   def destroy
-    Game.find(params[:id]).destroy
+    Game.find(params[:slug]).destroy
     flash[:success] = "Game deleted successfully"
     redirect_to games_url
   end

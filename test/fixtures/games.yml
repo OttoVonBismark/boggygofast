@@ -1,7 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+sonic:
+  name: Sonic Mania
+  slug: sonic_mania
 
-one:
-  name: MyString
+metroid:
+  name: Metroid 2 Samus Returns
+  slug: metroid_2_sr
 
-two:
-  name: MyString
+ori:
+  name: Ori and the Blind Forest
+  slug: ori_bf
