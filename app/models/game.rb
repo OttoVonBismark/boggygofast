@@ -2,6 +2,8 @@ class Game < ApplicationRecord
     extend FriendlyId
     friendly_id :param, use: [:finders, :slugged]
 
+    has_many :users, through: :speedruns
+
     validates_presence_of :name, :slug
 
     before_save :prepare_slug
