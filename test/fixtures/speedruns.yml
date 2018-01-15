@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game: one
+  user: one
+  is_valid: 
+  date_finished: 2018-01-03
+  category: MyString
+  run_time: 2018-01-03 14:17:13
+  run_notes: MyText
+  used_amiibo: 
+
+two:
+  game: two
+  user: two
+  is_valid: 
+  date_finished: 2018-01-03
+  category: MyString
+  run_time: 2018-01-03 14:17:13
+  run_notes: MyText
+  used_amiibo: 
