@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180103201712) do
+ActiveRecord::Schema.define(version: 20180117214834) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "amiibo_support", default: false
     t.index ["slug"], name: "index_games_on_slug"
   end
 
