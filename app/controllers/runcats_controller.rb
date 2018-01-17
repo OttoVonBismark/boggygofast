@@ -1,0 +1,2 @@
+class RuncatsController < ApplicationController
+end
