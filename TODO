@@ -1,11 +1,14 @@
-Introduce the Games model/controller
-TDD Time!
+Introduce the Speedruns model/controller.
+Add Amiibo compatibility boolean to the Game model.
+Add the Runcat (run category) model so that speedrun categories can have more than just 'any%/100%' categories.
+Adjust Speedrun model to support Runcat model.
+Introduce Leaderboards controller to handle run page construction.
+TDD Time! Make sure the right runs come up for the right games.
+
 Make page templates for Games and include fancy SCSS. Plan with style overrides in mind depending on what page is being displayed.
 
 INTEGRATION TESTS PART DEUX- Is the right CSS being used for the right games? Ori would be a good candidate for this.
 
-Introduce the Speedruns model/controller
-TDD Time! Make sure the right runs come up for the right games.
 Logic logic logic! Remember how Ruby does switches (that is to say, cases) and format db retrievals based on that. Use seeds to your advantage.
 Now's the time to make the run validation page for Admins and test it.
 

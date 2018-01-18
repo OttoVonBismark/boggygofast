@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+    has_many :games, through: :speedruns
+    
     attr_accessor :remember_token
 
     before_save :downcase_email
