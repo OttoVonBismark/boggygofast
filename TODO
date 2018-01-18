@@ -1,7 +1,3 @@
-Introduce the Speedruns model/controller.
-Add Amiibo compatibility boolean to the Game model.
-Add the Runcat (run category) model so that speedrun categories can have more than just 'any%/100%' categories.
-Adjust Speedrun model to support Runcat model.
 Introduce Leaderboards controller to handle run page construction.
 TDD Time! Make sure the right runs come up for the right games.
 
