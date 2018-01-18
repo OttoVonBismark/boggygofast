@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117220132) do
+ActiveRecord::Schema.define(version: 20180117214834) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
@@ -22,7 +22,9 @@ ActiveRecord::Schema.define(version: 20180117220132) do
   end
 
   create_table "runcats", force: :cascade do |t|
-    t.string "category"
+    t.string "category", null: false
+    t.text "rules", null: false
+    t.boolean "amiibo_allowed", default: false
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,6 +36,7 @@ ActiveRecord::Schema.define(version: 20180117220132) do
     t.integer "game_id"
     t.integer "user_id"
     t.date "date_finished", null: false
+    t.integer "runcat_id"
     t.time "run_time", null: false
     t.text "run_notes"
     t.boolean "used_amiibo", default: false
@@ -41,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180117220132) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_speedruns_on_game_id"
+    t.index ["runcat_id"], name: "index_speedruns_on_runcat_id"
     t.index ["user_id"], name: "index_speedruns_on_user_id"
   end
 
