@@ -7,7 +7,7 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find_by_slug(params[:id])
+    @game = Game.find_by_slug(params[:slug]) or render_404 # Hey! Me! Make sure params[:???] is the same as the thing you're searching for, dingus!  
   end
 
   def new

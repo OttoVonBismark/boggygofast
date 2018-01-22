@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Redirects user to a 404 page.
+  def render_404
+    raise ActionController::RoutingError.new('404 Error. You seem to be lost, or the thing you wanted does not exist.')
+  end
+
   # Confirms a logged-in user.
   def logged_in_user
     unless logged_in?
