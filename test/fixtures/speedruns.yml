@@ -1,21 +1,53 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  game: one
-  user: one
-  is_valid: 
+sonic_1:
+  game_id: 1
+  user_id: 1
+  is_valid: true
   date_finished: 2018-01-03
-  category: MyString
-  run_time: 2018-01-03 14:17:13
-  run_notes: MyText
-  used_amiibo: 
+  runcat_id: 1
+  run_time: 00:35:13
+  run_notes: Sonic any% by michael.
 
-two:
-  game: two
-  user: two
-  is_valid: 
+sonic_2:
+  game_id: 1
+  user_id: 2
+  is_valid: true 
   date_finished: 2018-01-03
-  category: MyString
-  run_time: 2018-01-03 14:17:13
-  run_notes: MyText
-  used_amiibo: 
+  runcat_id: 2
+  run_time: 01:01:10
+  run_notes: Sonic 100% by archer.
+
+metroid_1:
+  game_id: 2
+  user_id: 1
+  is_valid: true
+  date_finished: 2018-01-05
+  runcat_id: 3
+  run_time: 00:25:00
+  run_notes: Metroid any% by michael.
+
+metroid_2:
+  game_id: 2
+  user_id: 2
+  is_valid: false
+  date_finished: 2018-01-10
+  runcat_id: 4
+  run_time: 01:00:00
+  run_notes: Metroid 100% by archer.
+
+ori_1:
+  game_id: 3
+  user_id: 1
+  is_valid: true
+  date_finished: 2018-01-15
+  runcat_id: 5
+  run_time: 00:32:45
+  run_notes: Ori any% by michael.
+
+ori_2:
+  game_id: 3
+  user_id: 2
+  is_valid: true
+  date_finished: 2018-01-11
+  runcat_id: 6
+  run_time: 01:10:01
+  run_notes: Ori 100% by archer.

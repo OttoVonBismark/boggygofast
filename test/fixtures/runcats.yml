@@ -1,9 +1,29 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+sonic_anyperc:
+  category: any%
+  rules: Beat the game as fast as possible.
+  game_id: 1
 
-one:
-  category: MyString
-  game_id: one
+sonic_100perc:
+  category: 100%
+  rules: Beat the game as fast as possible, collecting all chaos emeralds.
+  game_id: 1
 
-two:
-  category: MyString
-  game_id: two
+metroid_anyperc:
+  category: any%
+  rules: Beat the game as fast as possible.
+  game_id: 2
+
+metroid_100perc:
+  category: 100%
+  rules: Beat the game as fast as possible, collecting all pickups.
+  game_id: 2
+
+ori_anyperc:
+  category: any%
+  rules: Beat the game as fast as possible.
+  game_id: 3
+
+ori_anyperc:
+  category: 100%
+  rules: Beat the game as fast as possible, collecting all pickups.
+  game_id: 3
