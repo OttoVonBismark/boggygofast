@@ -6,3 +6,9 @@ Currently feature-incomplete, Boggy Go Fast is a speedrun archiving tool. The cu
 ## Why even use this?
 
 A good question! If you're a speedrunner, Boggy Go Fast can help you keep track of your times, as well as those of your friends. It's geared more towards casual runners who aren't overly interested in world-class speedrunner strats, preferring instead to 'freestyle' through games as fast as possible without feeling pressured by the more dedicated runners.
+
+## Want to develop locally? Here's what's missing (for security)
+
+You'll want to create `config/secrets.yml` since I'm not including mine in repos. The application is configured to use that file for development and test environments, but not production. For that, you'll have to run `secrets:setup` to generate a `secrets.yml.key` and `secrets.yml.enc` file in which to store the key base as well as database authentication information (refer to `config/database.yml` for what details you'll need to provide).
+If you need to generate a key base, run `rails secret` and copy/paste the output where necessary. As a reminder, do NOT store your production key in the default secrets file! That is plaintext and anyone can read it! Use `rails secrets:edit` to utilize the enctrypted file instead. I've done the configuration for you, so Rails already expects it.
+Lastly, if Rails spits out an error asking for an $EDITOR variable, open up your bash profiler of choice (depending on your situation. Google that stuff if you're unsure which one you need) and toss in a line reading `EDITOR="nano"` where 'nano' is either itself or your CLI editor of choice.
