@@ -1,5 +1,6 @@
 class Runcat < ApplicationRecord
   belongs_to :game
 
-  validates_presence_of :category
+  validates :category, :presence => true
+  validates :rules, :presence => true
 end

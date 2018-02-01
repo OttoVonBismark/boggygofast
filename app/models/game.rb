@@ -4,6 +4,7 @@ class Game < ApplicationRecord
 
     has_many :users, through: :speedruns
     has_many :runcats
+    has_many :speedruns
 
     validates_presence_of :name, :slug
 
