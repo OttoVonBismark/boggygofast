@@ -1,4 +1,4 @@
-Introduce Leaderboards controller to handle run page construction.
+Program the controllers. Remember: if one model belongs to another, the other model is in charge of the child's creation.
 TDD Time! Make sure the right runs come up for the right games.
 
 Make page templates for Games and include fancy SCSS. Plan with style overrides in mind depending on what page is being displayed.
