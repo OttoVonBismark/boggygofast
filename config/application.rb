@@ -11,7 +11,7 @@ module Boggygofast
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :local
 
     # Settings in config/environments/* take precedence over those specified here.
