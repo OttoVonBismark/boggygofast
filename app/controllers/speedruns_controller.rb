@@ -10,11 +10,13 @@ class SpeedrunsController < ApplicationController
     end
 
     def new
+        @game = Game.find_by_slug(params[:slug])
         @speedrun = Speedrun.new
     end
 
     def create
-        @speedrun = Speedrun.new(speedrun_params)
+        @game = Game.find_by_slug(params[:slug])
+        @speedrun = @game.speedruns.new(speedrun_params)
         if @speedrun.save
             flash[:info] = "Run submitted. It will appear once an admin has verified it."
             redirect_to games_index # Change this to the relevent game's leaderboard page later.
@@ -46,7 +48,7 @@ class SpeedrunsController < ApplicationController
     private
 
     def speedrun_params
-        params.require(:speedrun).permit(:date_finished, :category, :run_time, :run_notes, :used_amiibo, :is_valid)
+        params.require(:speedrun).permit(:date_finished, :runcat_id, :run_time, :run_notes, :is_valid)
     end
 
 end

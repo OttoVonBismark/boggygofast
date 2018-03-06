@@ -7,7 +7,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game = Game.find_by_slug(params[:slug]) or render_404 # Hey! Me! Make sure params[:???] is the same as the thing you're searching for, dingus!  
+    @game = Game.find_by_slug(params[:slug]) or render_404 # Hey! Me! Make sure params[:???] is the same as the thing you're searching for, dingus!
+    @speedrun = @game.speedruns
   end
 
   def new
@@ -42,7 +43,7 @@ class GamesController < ApplicationController
     redirect_to games_url
   end
   
-
+  
 
   private
 
