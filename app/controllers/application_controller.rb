@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url) unless current_user.admin?
   end
   
+  # Retrieves game information for it's child controllers.
+  def load_game
+    @game = Game.find_by_slug(params[:slug])
+  end
 end
