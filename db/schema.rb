@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126073712) do
+ActiveRecord::Schema.define(version: 20180525000608) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "info", default: "A very cool game indeed!"
     t.index ["slug"], name: "index_games_on_slug"
   end
 

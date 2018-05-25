@@ -1,5 +1,9 @@
 <% provide(:title, @game.name ) %>
-<h1>Look at this nifty stub!</h1>
-<p>This is where the game info goes!</p>
-<p>I belong to <%= @game.name %></p>
+<h1>
+    <%= @game.name %>
+</h1>
+<p>
+    <%= @game.info %>
+</p>
+<p>To view the categories for this game, click <%= link_to "here", game_runcats_path %></p>
 <p>Click <%= link_to "here", new_game_speedrun_path %> to submit a run for this game.</p>

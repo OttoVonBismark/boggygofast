@@ -1,11 +1,14 @@
 sonic:
   name: Sonic Mania
   slug: sonic_mania
+  info: A game about Sonic
 
 metroid:
   name: Metroid 2 Samus Returns
   slug: metroid_2_sr
+  info: A game about Metroids
 
 ori:
   name: Ori and the Blind Forest
   slug: ori_bf
+  info: A game about Ori
