@@ -16,7 +16,7 @@ class RuncatsController < ApplicationController
         @runcat = @game.runcats.new(runcat_params)
         if @runcat.save
             flash[:info] = "Category created successfully."
-            redirect_to game_runcats
+            redirect_to runcats_path
         else
             render 'new'
         end

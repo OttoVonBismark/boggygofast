@@ -5,9 +5,16 @@
 
 <% if @game.runcats.count > 0 %>
     <% @game.runcats.each do |runcat| %>
-        <h2><%= runcat.category %></h2>
+        <h3><%= runcat.category %></h3>
         <p><%= runcat.rules %></p>
     <% end %>
 <% else %>
     <p>No categories to list.</p>
+<% end %>
+<% begin %>
+    <% if current_user.admin? %>
+        <p>Admins can create new categories <%= link_to "here", new_game_runcat_path %></p>
+    <% end %>
+<% rescue %>
+    <% nil %>
 <% end %>

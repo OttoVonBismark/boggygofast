@@ -3,8 +3,8 @@ class Game < ApplicationRecord
     friendly_id :param, use: [:finders, :slugged]
 
     has_many :users, through: :speedruns
-    has_many :runcats
-    has_many :speedruns
+    has_many :runcats, dependent: :destroy
+    has_many :speedruns, dependent: :destroy
 
     validates_presence_of :name, :slug
 
