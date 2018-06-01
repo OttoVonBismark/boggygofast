@@ -18,5 +18,8 @@ module Boggygofast
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.action_view.embed_authenticity_token_in_remote_forms = true
+
+    # Make sure SQLite adapter uses integers for booleans instead of t|f
+    config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end
