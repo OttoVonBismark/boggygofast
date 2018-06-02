@@ -21,12 +21,12 @@ Rails.application.routes.draw do
   scope '/games' do
     # It would be too easy to let Rails route things for speedruns.
     # Speedruns/Runcats Controller routing is mapped manually here.
-    get     '/games/:slug/runs',            to: 'speedruns#index',  as: :speedruns
-    get     '/games/:slug/runs/new',        to: 'speedruns#new',    as: :new_game_speedrun
-    get     '/games/:slug/runs/:id/edit',   to: 'speedruns#edit',   as: :edit_game_speedrun
-    post    '/games/:slug/runs',            to: 'speedruns#create'
-    patch   '/games/:slug/runs/:id',        to: 'speedruns#edit'
-    delete  '/games/:slug/runs/:id',        to: 'speedruns#destroy'
+    get     '/:slug/runs',            to: 'speedruns#index',  as: :speedruns
+    get     '/:slug/runs/new',        to: 'speedruns#new',    as: :new_game_speedrun
+    get     '/:slug/runs/:id/edit',   to: 'speedruns#edit',   as: :edit_game_speedrun
+    post    '/:slug/runs',            to: 'speedruns#create'
+    patch   '/:slug/runs/:id',        to: 'speedruns#edit'
+    delete  '/:slug/runs/:id',        to: 'speedruns#destroy'
 
      # Runcats Routing. See above.
     get     '/:slug/categories',            to: 'runcats#index',    as: :runcats

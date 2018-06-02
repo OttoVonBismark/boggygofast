@@ -18,7 +18,7 @@ class SpeedrunsController < ApplicationController
         @speedrun = @game.speedruns.new(speedrun_params)
         if @speedrun.save
             flash[:info] = "Run submitted. It will appear once an admin has verified it."
-            redirect_to game_speedruns
+            redirect_to @speedruns
         else
             render 'new'
         end 
@@ -47,7 +47,8 @@ class SpeedrunsController < ApplicationController
     private
 
     def speedrun_params
-        params.require(:speedrun).permit(:date_finished, :runcat_id, :run_time, :run_notes, :is_valid)
+        params.require(:speedrun).permit(:date_finished, :runcat_id, :run_time, :run_notes, :is_valid,
+                                         :game_id, :user_id, :run_time_h, :run_time_m, :run_time_s)
     end
 
 end

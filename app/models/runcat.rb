@@ -3,4 +3,8 @@ class Runcat < ApplicationRecord
 
   validates :category, :presence => true
   validates :rules, :presence => true
+
+  def get_category
+    self.category
+  end
 end
