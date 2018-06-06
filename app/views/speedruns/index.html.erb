@@ -1,0 +1,30 @@
+<% provide(:title, 'Runs for ' + @game.name) %>
+<h1>Runs for
+    <%= @game.name %>
+</h1>
+
+<% if @game.speedruns.count > 0 %>
+    <% @game.runcats.each do |runcat| %>
+        <% rcid = runcat.id %>
+        <h3 align='center'><%= runcat.category %></h3>
+        <table>
+            <tr class="tableHead">
+                <td>Rank</td>
+                <td>Runner</td>
+                <td>Time</td>
+                <td>Date Finished</td>
+                <td>Run Notes</td>
+            </tr>
+            <% Speedrun.where('runcat_id == ?', rcid).find_each_with_order do |run| %>
+                <tr>
+                    <td><%= run.runner_name %></td>
+                    <td><%= run.run_time %></td>
+                    <td><%= run.run_notes %></td>
+                </tr>
+            <% end %>      
+        </table>
+        <p>I belong to <%= @game.name %> and my category is <%= runcat.category %> </p>
+    <% end %>
+<% else %>
+    <h3>No runs exist for this game. Feel free to <%= link_to "submit a run!", new_game_speedrun_path %></h3>
+<% end %>
