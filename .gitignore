@@ -28,3 +28,6 @@
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 config/secrets.yml.enc
+
+# Ignore .DS_Store from OS X
+.DS_Store
