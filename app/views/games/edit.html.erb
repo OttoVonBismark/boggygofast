@@ -1,0 +1,8 @@
+<% provide(:title, 'Edit ' + @game.name) %>
+<h1>Edit <%= @game.name %></h1>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <%= render :partial => 'game/form_game', :locals => {:button_text => 'Update Game'} %>
+    </div>
+</div>

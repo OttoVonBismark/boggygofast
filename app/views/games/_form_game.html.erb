@@ -1,0 +1,14 @@
+<%= form_for(@game) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control', placeholder: "Metroid Prime 2" %>
+
+    <%= f.label :slug %>
+    <%= f.text_field :slug, class: 'form-control', placeholder: "metroid_prime_2" %>
+
+    <%= f.label :info %>
+    <%= f.text_field :info, class: 'form-control', placeholder: "A very cool game indeed!" %>
+
+    <%= f.submit button_text, class: 'btn btn-primary' %>
+<% end %>
