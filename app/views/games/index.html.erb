@@ -7,4 +7,12 @@
     <%= render @games %>
 </ul>
 
+<% begin %>
+    <% if current_user.admin? %>
+        <%= link_to "Create New Game", new_game_path %>
+    <% end %>
+<% rescue %>
+    <% nil %>
+<% end %>
+
 <%= will_paginate %>
