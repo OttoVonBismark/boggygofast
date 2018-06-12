@@ -3,24 +3,14 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <%= form_for(@game) do |f| %>
-            <%= render 'shared/error_messages', object: f.object %>
-
-            <%= f.label :name %>
-            <%= f.text_field :name, class: 'form-control', placeholder: "Metroid Prime 2" %>
-
-            <%= f.label :slug %>
-            <%= f.text_field :slug, class: 'form-control', placeholder: "metroid_prime_2" %>
-
-            <%= f.submit "Add Game", class: 'btn btn-primary' %>
-        <% end %>
-        <h3>A Note on Slugs and CSS</h3>
+        <%= render :partial => 'game/form_game', :locals => {:button_text => 'Create Game'} %>
+        <!--    <h3>A Note on Slugs and CSS</h3>
         <p>The Slug value is used internally to tell the application where to look for stylesheets and other
         important values. Try to keep the slug value close to the name value for your own sake.</p>
         <p>Since the slug happens to also be the name of the stylesheet the app expects, if you want to set your
         own custom (S)CSS, you may do so by creating a file named <b>runpage_slug_goes_here.scss</b> and stuffing it
         in <b>app/assets/stylesheets</b>. That stylesheet will override (and add to) values set in <b>runpage_default.scss.</b>
         Adding custom stylesheets for games is fun, pretty, and completely optional.</p>
-        <p>Don't forget to run <b>rails assets:precompile</b> once you're done messing with stylesheets.</p>
+        <p>Don't forget to run <b>rails assets:precompile</b> once you're done messing with stylesheets.</p> -->
     </div>
 </div>

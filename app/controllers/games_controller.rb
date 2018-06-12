@@ -8,7 +8,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by_slug(params[:slug]) or render_404 # Hey! Me! Make sure params[:???] is the same as the thing you're searching for, dingus!
-    @speedrun = @game.speedruns
+    # @speedrun = @game.speedruns
   end
 
   def new
@@ -48,7 +48,7 @@ class GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :slug)
+    params.require(:game).permit(:name, :slug, :info)
   end
   
 end

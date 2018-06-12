@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126073712) do
+ActiveRecord::Schema.define(version: 2018_06_01_235701) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "info", default: "A very cool game indeed!"
     t.index ["slug"], name: "index_games_on_slug"
   end
 
@@ -35,11 +36,13 @@ ActiveRecord::Schema.define(version: 20180126073712) do
     t.integer "user_id"
     t.date "date_finished", null: false
     t.integer "runcat_id"
-    t.time "run_time", null: false
     t.text "run_notes"
     t.boolean "is_valid", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "run_time_h", default: 99, null: false
+    t.integer "run_time_m", default: 59, null: false
+    t.integer "run_time_s", default: 59, null: false
     t.index ["game_id"], name: "index_speedruns_on_game_id"
     t.index ["runcat_id"], name: "index_speedruns_on_runcat_id"
     t.index ["user_id"], name: "index_speedruns_on_user_id"

@@ -1,7 +1,8 @@
-Program the controllers. Remember: if one model belongs to another, the other model is in charge of the child's creation.
-TDD Time! Make sure the right runs come up for the right games.
+Child models need Edit functionality at some point, but despite my best efforts, I can't seem to implement it without major bugs. We'll revisit this later, but for sake of
+progress, we're moving on. Routes/methods will be commented out for now.
 
-Make page templates for Games and include fancy SCSS. Plan with style overrides in mind depending on what page is being displayed.
+Make page templates for Games and include fancy SCSS. Plan with style overrides in mind depending on what page is being displayed. Use an uploader and style model?
+See http://www.diatomenterprises.com/dynamically-compile-stylesheets-with-rails-and-sass/ for ideas.
 
 INTEGRATION TESTS PART DEUX- Is the right CSS being used for the right games? Ori would be a good candidate for this.
 

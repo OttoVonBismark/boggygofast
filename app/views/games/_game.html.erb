@@ -1,10 +1,15 @@
 <li>
     <%= link_to game.name, game %>
+    <%= link_to " | Runs", speedruns_path(game.slug) %>
+    <%= link_to " | Categories", runcats_path(game.slug) %>
+
     <% begin %>
         <% if current_user.admin? %>
-            | <%= link_to "Delete", game_path(game.slug), method: :delete, data: {confirm: "Are you sure?"} %>
+            <%= link_to " | New Category", new_game_runcat_path(game.slug) %>
+            <%= link_to " | Edit Game", edit_game_path(game.slug) %>
+            <%= link_to " | Delete", game_path(game.slug), method: :delete, data: {confirm: "Are you sure?"} %>
         <% end %>
-    <% rescue %> 
+    <% rescue %>
         <% nil %>
     <% end %>
 </li>

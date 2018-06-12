@@ -9,7 +9,9 @@ class SpeedrunTest < ActiveSupport::TestCase
       :user_id => @user.id, 
       date_finished: "2018-01-10", 
       :runcat_id => @runcat.id, 
-      run_time: "01:00:40", 
+      run_time_h: 1,
+      run_time_m: 0,
+      run_time_s: 40, 
       run_notes: "Notetastic", 
       is_valid: true
     )
@@ -24,10 +26,22 @@ class SpeedrunTest < ActiveSupport::TestCase
     refute @speedrun.valid?
   end
 
-  test "run_time should not be empty" do
-    @speedrun.run_time = nil
+  test "run_time_h should not be empty" do
+    @speedrun.run_time_h = nil
     refute @speedrun.valid?
   end
+
+  test "run_time_m should not be empty" do
+    @speedrun.run_time_m = nil
+    refute @speedrun.valid?
+  end
+
+  test "run_time_s should not be empty" do
+    @speedrun.run_time_s = nil
+    refute @speedrun.valid?
+  end
+
+  # TODO: Test run_time_x validations to make sure values are within range.
 
   test "run_notes can be empty and still valid" do
     @speedrun.run_notes = nil

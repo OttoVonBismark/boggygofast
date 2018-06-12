@@ -18,22 +18,24 @@ Rails.application.routes.draw do
   delete  '/logout',            to: 'sessions#destroy'
   delete  '/games/:slug',       to: 'games#destroy'
 
-  # It would be too easy to let Rails route things for speedruns.
-  # Speedruns/Runcats Controller routing is mapped manually here.
-  get     '/games/:slug/runs', to: 'speedruns#index', as: :game_speedruns
-  get     '/games/:slug/runs/new', to: 'speedruns#new', as: :new_game_speedrun
-  get     '/games/:slug/runs/:id/edit',  to: 'speedruns#edit', as: :edit_game_speedrun
-  post    '/games/:slug/runs', to: 'speedruns#create'
-  patch   '/games/:slug/runs/:id', to: 'speedruns#edit'
-  delete  '/games/:slug/runs/:id', to: 'speedruns#destroy'
+  scope '/games' do
+    # It would be too easy to let Rails route things for speedruns.
+    # Speedruns/Runcats Controller routing is mapped manually here.
+    get     '/:slug/runs',            to: 'speedruns#index',  as: :speedruns
+    get     '/:slug/runs/new',        to: 'speedruns#new',    as: :new_game_speedrun
+    # get     '/:slug/runs/:id/edit',   to: 'speedruns#edit',   as: :edit_game_speedrun
+    post    '/:slug/runs',            to: 'speedruns#create'
+    # patch   '/:slug/runs/:id',        to: 'speedruns#edit'
+    delete  '/:slug/runs/:id',        to: 'speedruns#destroy'
 
-  # Runcats Routing. See above.
-  get     '/games/:slug/categories', to: 'runcats#index', as: :game_runcats
-  get     '/games/:slug/categories/new', to: 'runcats#new', as: :new_game_runcat
-  get     '/games/:slug/categories/:id/edit', to: 'runcats#edit', as: :edit_game_runcat
-  post    '/games/:slug/categories', to: 'runcats#create'
-  patch   '/games/:slug/categories/:id', to: 'runcats#edit'
-  delete  '/games/:slug/categories/:id', to: 'runcats#destroy'
+     # Runcats Routing. See above.
+    get     '/:slug/categories',            to: 'runcats#index',    as: :runcats
+    get     '/:slug/categories/new',        to: 'runcats#new',      as: :new_game_runcat
+    # get     '/:slug/categories/:id/edit',   to: 'runcats#edit',     as: :edit_game_runcat
+    post    '/:slug/categories',            to: 'runcats#create'
+    # patch   '/:slug/categories/:id',        to: 'runcats#edit'
+    delete  '/:slug/categories/:id',        to: 'runcats#destroy'
+  end
 
   # Games is routed manually due to the slugs interfering with standard resource urls
   # For compliance, some routes are named namually via the 'as' parameter.
