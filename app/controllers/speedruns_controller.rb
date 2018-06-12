@@ -1,5 +1,5 @@
 class SpeedrunsController < ApplicationController
-    before_action :admin_user,      only: [:edit, :update, :destroy]
+    before_action :admin_user,      only: [:destroy]
     before_action :logged_in_user,  only: [:new, :create]
     before_action :load_game
 
@@ -23,17 +23,17 @@ class SpeedrunsController < ApplicationController
         end 
     end
 
-    def edit
-    end
+    # def edit
+    # end
 
-    def update
-        if @speedrun.update_attributes(speedrun_params)
-            flash[:success] = "Update successful"
-            redirect_to @speedrun
-        else
-            render 'edit'
-        end
-    end
+    # def update
+    #     if @speedrun.update_attributes(speedrun_params)
+    #         flash[:success] = "Update successful"
+    #         redirect_to @speedrun
+    #     else
+    #         render 'edit'
+    #     end
+    # end
 
     def destroy
         Speedrun.find(params[:id]).destroy
@@ -43,12 +43,6 @@ class SpeedrunsController < ApplicationController
 
     def retrieve_runs_by_category(rcid)
         Speedrun.where('runcat_id == ?', rcid).to_a
-        # Speedrun.find_by_sql([<<-SQL, runcat_id: cat]) 
-        #   SELECT user_id, game_id, runcat_id, run_time_h, run_time_m, run_time_s, date_finished, run_notes FROM speedruns WHERE runcat_id = ?
-        #     ORDER BY run_time_h ASC
-        #     ORDER BY run_time_m ASC 
-        #     ORDER BY run_time_s ASC
-        #   SQL
     end
 
 

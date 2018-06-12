@@ -1,5 +1,5 @@
 class RuncatsController < ApplicationController
-    before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
+    before_action :admin_user, only: [:new, :create, :destroy]
     before_action :load_game
 
     def show
@@ -22,8 +22,9 @@ class RuncatsController < ApplicationController
         end
     end
 
-    def edit
-    end
+    # I can't seem to implement this without major bugs showing up including what I suspect to be a memory leak. We'll come back to this.
+    # def edit
+    # end
 
     def destroy
         Runcat.find(params[:id]).destroy

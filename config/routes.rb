@@ -23,17 +23,17 @@ Rails.application.routes.draw do
     # Speedruns/Runcats Controller routing is mapped manually here.
     get     '/:slug/runs',            to: 'speedruns#index',  as: :speedruns
     get     '/:slug/runs/new',        to: 'speedruns#new',    as: :new_game_speedrun
-    get     '/:slug/runs/:id/edit',   to: 'speedruns#edit',   as: :edit_game_speedrun
+    # get     '/:slug/runs/:id/edit',   to: 'speedruns#edit',   as: :edit_game_speedrun
     post    '/:slug/runs',            to: 'speedruns#create'
-    patch   '/:slug/runs/:id',        to: 'speedruns#edit'
+    # patch   '/:slug/runs/:id',        to: 'speedruns#edit'
     delete  '/:slug/runs/:id',        to: 'speedruns#destroy'
 
      # Runcats Routing. See above.
     get     '/:slug/categories',            to: 'runcats#index',    as: :runcats
     get     '/:slug/categories/new',        to: 'runcats#new',      as: :new_game_runcat
-    get     '/:slug/categories/:id/edit',   to: 'runcats#edit',     as: :edit_game_runcat
+    # get     '/:slug/categories/:id/edit',   to: 'runcats#edit',     as: :edit_game_runcat
     post    '/:slug/categories',            to: 'runcats#create'
-    patch   '/:slug/categories/:id',        to: 'runcats#edit'
+    # patch   '/:slug/categories/:id',        to: 'runcats#edit'
     delete  '/:slug/categories/:id',        to: 'runcats#destroy'
   end
 
