@@ -7,23 +7,29 @@
     <h3>Want to submit a run? You can do so <%= link_to "here!", new_game_speedrun_path %></h3>
     <% @game.runcats.each do |runcat| %>
         <% rcid = runcat.id %>
-        <h3 align='center'><%= runcat.category %></h3>
-        <table>
-            <tr class="tableHead">
-                <td>Rank</td>
-                <td>Runner</td>
-                <td>Time</td>
-                <td>Date Finished</td>
-                <td>Run Notes</td>
-            </tr>
-            <% Speedrun.where('runcat_id = ?', rcid).find_each_with_order do |run| %>
-                <tr>
-                    <td><%= run.runner_name %></td>
-                    <td><%= run.run_time %></td>
-                    <td><%= run.run_notes %></td>
+        <div class="tableZone">
+            <h4 align='center' class="categoryHead"><%= runcat.category %></h4>
+            <table>
+                <tr class="tableHead">
+                    <td>Rank</td>
+                    <td>Runner</td>
+                    <td>Time</td>
+                    <td>Date Finished</td>
+                    <td>Run Notes</td>
                 </tr>
-            <% end %>      
-        </table>
+                <% speed_rank = 1 %>
+                <% Speedrun.where('runcat_id = ?', rcid).order(run_time_h: :asc, run_time_m: :asc, run_time_s: :asc).find_each_with_order do |run| %>
+                    <tr>
+                        <td><%= speed_rank %>
+                        <td><%= run.runner_name %></td>
+                        <td><%= run.run_time %></td>
+                        <td><%= run.date_finished %></td>
+                        <td><%= run.run_notes %></td>
+                    </tr>
+                    <% speed_rank += 1 %>
+                <% end %>      
+            </table>
+        </div>
     <% end %>
 <% else %>
     <h3>No runs exist for this game. Feel free to <%= link_to "submit a run!", new_game_speedrun_path %></h3>

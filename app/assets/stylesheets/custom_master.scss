@@ -184,3 +184,43 @@ footer {
     margin-top: 45px;
     @include box_sizing;
 }
+
+/* Run Table Defaults */
+.tableZone {
+    background: #121212;
+    border-radius: 7px;
+
+    h4 {
+        font-weight: bolder;
+    }
+
+    table {
+        border-top-style: double;
+        border-right-style: double;
+        border-bottom-style: double;
+        border-left-style: double;
+        border-top-width: medium;
+        border-right-width: medium;
+        border-bottom-width: medium;
+        border-left-width: medium;
+    }
+    th {
+        color: #333;
+        background-color: #CCC;
+        /*border: thin solid #000;*/
+    }
+    td {
+        color: #CCC;
+        background-color: #333;
+        border: thin solid #000;
+        width: fit-content;
+        padding: 7px;
+    }
+
+    .tableHead {
+        font-weight: bold;
+        td{
+            background: #171717;
+        }
+    }
+}
