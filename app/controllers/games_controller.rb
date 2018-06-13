@@ -18,7 +18,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(game_params)
     if @game.save
-      flash[:info] = "Game added successfully. Using default CSS until you code otherwise."
+      flash[:info] = "Game added successfully."
       redirect_to games_index_url
     else
       render 'new'

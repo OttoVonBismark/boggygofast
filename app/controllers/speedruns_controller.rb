@@ -16,7 +16,7 @@ class SpeedrunsController < ApplicationController
     def create
         @speedrun = @game.speedruns.new(speedrun_params)
         if @speedrun.save
-            flash[:info] = "Run submitted. It will appear once an admin has verified it."
+            flash[:info] = "Run submitted successfully!"
             redirect_to root_url
         else
             render 'new'

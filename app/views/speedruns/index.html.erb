@@ -4,6 +4,7 @@
 </h1>
 
 <% if @game.speedruns.count > 0 %>
+    <h3>Want to submit a run? You can do so <%= link_to "here!", new_game_speedrun_path %></h3>
     <% @game.runcats.each do |runcat| %>
         <% rcid = runcat.id %>
         <h3 align='center'><%= runcat.category %></h3>
@@ -23,7 +24,6 @@
                 </tr>
             <% end %>      
         </table>
-        <p>I belong to <%= @game.name %> and my category is <%= runcat.category %> </p>
     <% end %>
 <% else %>
     <h3>No runs exist for this game. Feel free to <%= link_to "submit a run!", new_game_speedrun_path %></h3>

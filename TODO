@@ -4,9 +4,8 @@ progress, we're moving on. Routes/methods will be commented out for now.
 Make page templates for Games and include fancy SCSS. Plan with style overrides in mind depending on what page is being displayed. Use an uploader and style model?
 See http://www.diatomenterprises.com/dynamically-compile-stylesheets-with-rails-and-sass/ for ideas.
 
-INTEGRATION TESTS PART DEUX- Is the right CSS being used for the right games? Ori would be a good candidate for this.
+INTEGRATION TESTS PART DEUX- Custom CSS comes after Delta. Sorry, I just get the feeling this is going to be a nightmare to get working the way I want it to.
 
-Logic logic logic! Remember how Ruby does switches (that is to say, cases) and format db retrievals based on that. Use seeds to your advantage.
 Now's the time to make the run validation page for Admins and test it.
 
 TESTS GALORE! Make sure if a user dies, their runs go with it, but NOT ALL RUNS FOR A GAME! That said, if a Game dies, all of it's runs die regardless of Users.
