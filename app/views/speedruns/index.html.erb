@@ -15,7 +15,7 @@
                 <td>Date Finished</td>
                 <td>Run Notes</td>
             </tr>
-            <% Speedrun.where('runcat_id == ?', rcid).find_each_with_order do |run| %>
+            <% Speedrun.where('runcat_id = ?', rcid).find_each_with_order do |run| %>
                 <tr>
                     <td><%= run.runner_name %></td>
                     <td><%= run.run_time %></td>
