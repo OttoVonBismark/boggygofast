@@ -26,6 +26,7 @@ class GamesController < ApplicationController
   end
 
   def edit
+    @game = Game.find_by_slug(params[:slug])
   end
 
   def update
