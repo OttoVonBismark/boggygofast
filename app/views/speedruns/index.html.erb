@@ -1,7 +1,5 @@
 <% provide(:title, 'Runs for ' + @game.name) %>
-<h1>Runs for
-    <%= @game.name %>
-</h1>
+<h1>Runs for <%= @game.name %></h1>
 
 <% if @game.speedruns.count > 0 %>
     <h3>Want to submit a run? You can do so <%= link_to "here!", new_game_speedrun_path %></h3>

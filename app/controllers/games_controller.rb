@@ -26,12 +26,15 @@ class GamesController < ApplicationController
   end
 
   def edit
+    @game = Game.find_by_slug(params[:slug])
   end
 
   def update
+    @game = Game.find_by_slug(params[:slug])
     if @game.update_attributes(game_params)
       flash[:success] = "Game updated"
-      redirect_to games_url
+      @game = @game.reload
+      redirect_to @game
     else
       render 'edit'
     end

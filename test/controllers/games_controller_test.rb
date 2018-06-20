@@ -12,16 +12,48 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   # This also tests to make sure my begin/rescue block works, since current_user.admin? (for the delete link) doesn't exist unless the viewer logs in,
   # causing a NoMethod Error and NilClass exception otherwise.
+  # General page gets
   test "should get index" do
     get games_index_path
     assert_response :success
     assert_select "title", "List of Games | BoggyGoFast Speedrun Archive"
   end
 
+  test "should get show page" do
+    get game_path(@sonic)
+    assert_response :success
+    assert_select "title", "Sonic Mania | BoggyGoFast Speedrun Archive"
+  end
+
+  # Admin gets
+  test "should get new game page for admin users" do
+    log_in_as(@user)
+    assert @user.admin?
+    get new_game_path
+    assert_response :success
+    assert_select "title", "Create a New Game | BoggyGoFast Speedrun Archive"
+  end
+
+  test "should get edit page for admin users" do
+    log_in_as(@user)
+    assert @user.admin?
+    get edit_game_path(@sonic)
+    assert_response :success
+    assert_select "title", "Edit Sonic Mania | BoggyGoFast Speedrun Archive"
+  end
+  
+  # Non-Admin redirects
   test "should redirect non-admins from new game page" do
     log_in_as(@other_user)
     refute @other_user.admin?
     get new_game_path
+    assert_redirected_to root_url
+  end
+
+  test "should redirect non-admins from edit game page" do
+    log_in_as(@other_user)
+    refute @other_user.admin?
+    get edit_game_path(@sonic.slug)
     assert_redirected_to root_url
   end
 

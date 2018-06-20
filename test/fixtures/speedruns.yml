@@ -1,6 +1,8 @@
+# Note how the game_id column is labeled simply as "game"? That's because the
+# actual Game ID is randomized every time you run tests.
 sonic_1:
-  game_id: 1
-  user_id: 1
+  game: sonic
+  user: michael
   is_valid: true
   date_finished: 2018-01-03
   runcat_id: 1
@@ -10,8 +12,8 @@ sonic_1:
   run_notes: Sonic any% by michael.
 
 sonic_2:
-  game_id: 1
-  user_id: 2
+  game: sonic
+  user: archer
   is_valid: true 
   date_finished: 2018-01-03
   runcat_id: 2
@@ -21,8 +23,8 @@ sonic_2:
   run_notes: Sonic 100% by archer.
 
 metroid_1:
-  game_id: 2
-  user_id: 1
+  game: metroid
+  user: michael
   is_valid: true
   date_finished: 2018-01-05
   runcat_id: 3
@@ -32,8 +34,8 @@ metroid_1:
   run_notes: Metroid any% by michael.
 
 metroid_2:
-  game_id: 2
-  user_id: 2
+  game: metroid
+  user: archer
   is_valid: false
   date_finished: 2018-01-10
   runcat_id: 4
@@ -43,8 +45,8 @@ metroid_2:
   run_notes: Metroid 100% by archer.
 
 ori_1:
-  game_id: 3
-  user_id: 1
+  game: ori
+  user: michael
   is_valid: true
   date_finished: 2018-01-15
   runcat_id: 5
@@ -54,8 +56,8 @@ ori_1:
   run_notes: Ori any% by michael.
 
 ori_2:
-  game_id: 3
-  user_id: 2
+  game: ori
+  user: archer
   is_valid: true
   date_finished: 2018-01-11
   runcat_id: 6

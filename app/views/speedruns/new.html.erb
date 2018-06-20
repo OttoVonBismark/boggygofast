@@ -18,7 +18,7 @@
             <% # We're providing :runcat_id using the @game.runcats.all method looking for :id for value and :category for label %>
 
             <%= f.label :run_time_h, "Hours" %>
-            <%= f.number_field :run_time_h, min: 00, max: 99, class: 'form-control' %>
+            <%= f.number_field :run_time_h, min: 00, max: 9, class: 'form-control' %>
             <%= f.label :run_time_m, "Minutes" %>
             <%= f.number_field :run_time_m, min: 00, max: 59, class: 'form-control' %>
             <%= f.label :run_time_s, "Seconds" %>

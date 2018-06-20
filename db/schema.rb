@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2018_06_12_212531) do
     t.boolean "is_valid", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "run_time_h", default: 99, null: false
+    t.integer "run_time_h", default: 9, null: false
     t.integer "run_time_m", default: 59, null: false
     t.integer "run_time_s", default: 59, null: false
     t.index ["game_id"], name: "index_speedruns_on_game_id"

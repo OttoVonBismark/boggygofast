@@ -41,7 +41,27 @@ class SpeedrunTest < ActiveSupport::TestCase
     refute @speedrun.valid?
   end
 
-  # TODO: Test run_time_x validations to make sure values are within range.
+  # Testing run time boundaries
+  test "run_time_h should not be greater than 9" do
+    @speedrun.run_time_h = 10
+    refute @speedrun.valid?
+  end
+
+  test "run_time_m should not be greater than 59" do
+    @speedrun.run_time_m = 60
+    refute @speedrun.valid?
+  end
+
+  test "run_time_s should not be greater than 59" do
+    @speedrun.run_time_s = 60
+    refute @speedrun.valid?
+  end
+
+  # Test run_time formatter
+  test "run_time formatter should output correctly" do
+    @run_time_formatted = @speedrun.run_time
+    assert_equal @run_time_formatted, "1:00:40"
+  end
 
   test "run_notes can be empty and still valid" do
     @speedrun.run_notes = nil

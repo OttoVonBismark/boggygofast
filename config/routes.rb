@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post    '/login',             to: 'sessions#create'
   post    '/games',             to: 'games#create'
 
-  patch   '/games/:slug/edit',  to: 'games#update'
+  patch   '/games/:slug',       to: 'games#update'
 
   delete  '/logout',            to: 'sessions#destroy'
   delete  '/games/:slug',       to: 'games#destroy'
