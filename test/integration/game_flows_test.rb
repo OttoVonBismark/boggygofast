@@ -89,9 +89,22 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
   #   assert_select 'a[href=?]', game_path(ori_wotw), text: name
   # end
 
+  # Temporary until I figure out the above issue
+  test "admins should get new games" do
+    log_in_as(@admin)
+    get new_game_path
+    assert_template
+  end
+
   test "non-admins should not get new games" do
     log_in_as(@non_admin)
     get new_game_path
     assert_redirected_to root_url
+  end
+
+  # Show tests
+  test "should get show page" do
+    get game_path(@sonic.slug)
+    assert_template
   end
 end

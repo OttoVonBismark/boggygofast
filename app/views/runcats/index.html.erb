@@ -1,7 +1,5 @@
 <% provide(:title, 'Categories for ' + @game.name) %>
-<h1>Categories for 
-    <%= @game.name %>
-</h1>
+<h1>Categories for <%= @game.name %></h1>
 
 <% if @game.runcats.count > 0 %>
     <% @game.runcats.each do |runcat| %>

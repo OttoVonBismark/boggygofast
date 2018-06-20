@@ -1,29 +1,37 @@
+# IDs are specified manually because Runcats and named fixtures inexplicably
+# do not play nice.
 sonic_anyperc:
+  id: 1
   category: any%
   rules: Beat the game as fast as possible.
-  game_id: 1
+  game: sonic
 
 sonic_100perc:
+  id: 2
   category: 100%
   rules: Beat the game as fast as possible, collecting all chaos emeralds.
-  game_id: 1
+  game: sonic
 
 metroid_anyperc:
+  id: 3
   category: any%
   rules: Beat the game as fast as possible.
-  game_id: 2
+  game: metroid
 
 metroid_100perc:
+  id: 4
   category: 100%
   rules: Beat the game as fast as possible, collecting all pickups.
-  game_id: 2
+  game: metroid
 
 ori_anyperc:
+  id: 5
   category: any%
   rules: Beat the game as fast as possible.
-  game_id: 3
+  game: ori
 
 ori_anyperc:
+  id: 6
   category: 100%
   rules: Beat the game as fast as possible, collecting all pickups.
-  game_id: 3
+  game: ori
