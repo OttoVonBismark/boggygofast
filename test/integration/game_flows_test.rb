@@ -80,7 +80,7 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
   #   slug = "OrI_WotW"
   #   info = "The sequel to Ori and the Blind Forest"
   #   assert_difference 'Game.count', 1 do
-  #     post gamegen_path, params: {game: {name: name, slug: slug, info: info}}
+  #     post games_path, params: {game: {name: name, slug: slug, info: info}}
   #   end
   #   assert_redirected_to games_path
   #   follow_redirect!
