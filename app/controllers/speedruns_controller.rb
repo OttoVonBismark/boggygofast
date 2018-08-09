@@ -23,6 +23,8 @@ class SpeedrunsController < ApplicationController
         end 
     end
 
+    # Edits and Updates don't work properly due to what might be a memory leak outside my control. (Rails loses track of what specifically it's operating on).
+    # Will attempt a fix with the next Rails update.
     # def edit
     # end
 
