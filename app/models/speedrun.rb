@@ -9,6 +9,7 @@ class Speedrun < ApplicationRecord
   belongs_to :user # This is mostly symbolic. Don't CREATE speedruns via @user. Do it with @game instead. Read and Destroy are fine though.
 
   validates_presence_of :date_finished
+  # Only accepts runs that do not exceed 9 hours 59 minutes, and 59 seconds.
   validates :run_time_h, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9}
   validates :run_time_m, :run_time_s, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59}
 
@@ -17,6 +18,7 @@ class Speedrun < ApplicationRecord
     runner_name = runner.name
   end
 
+  # Build the run time string by converting run_time_h, run_time_m, and run_time_s to strings and then mashing them together.
   def run_time
     rt_h = self.run_time_h.to_s
     

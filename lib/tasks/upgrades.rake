@@ -1,3 +1,4 @@
+# Updates SQLite databases to use integers for true/false instead of t/f
 namespace :upgrades do
   desc "Updates database entries for SQLite so that booleans use integers instead of 't' and 'f' since that is now deprecated."
   task update_sqlite_bools: :environment do
