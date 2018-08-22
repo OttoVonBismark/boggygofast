@@ -1,6 +1,6 @@
 <li>
-    <%= link_to game.name, game %>
-    <%= link_to " | Runs", speedruns_path(game.slug) %>
+    <%= link_to game.name, speedruns_path(game.slug) %>
+    <%= link_to " | Game Info", game%>
     <%= link_to " | Categories", runcats_path(game.slug) %>
 
     <% begin %>
