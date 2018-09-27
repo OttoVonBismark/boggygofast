@@ -9,9 +9,9 @@ User.create!(name: "Example User", email: "adminman@boggygofast.org", password: 
 end
 
 # Set up games.
-Game.create!(name: "Metroid Prime", slug: "metroid_prime")
-Game.create!(name: "Ori and the Blind Forest: Definitive Edition", slug: "ori_bf_de")
-Game.create!(name: "Metroid 2: Samus Returns", slug: "metroid_sr")
+Game.create!(name: "Metroid Prime", slug: "metroid_prime", info: "It's Metroid Prime! The game featuring Samus and the Metroid Prime!")
+Game.create!(name: "Ori and the Blind Forest: Definitive Edition", slug: "ori_bf_de", info: "It's Ori and the Blind Forest: Definitive Edition! How informative!")
+Game.create!(name: "Metroid 2: Samus Returns", slug: "metroid_sr", info: "Metroid: Samus Returns for the 3DS. It's divisive, in true Metroid fashion!")
 
 # Set up runcats.
 Runcat.create!(category: "any%", rules: "Beat the game as fast as possible.", game_id: 1)
