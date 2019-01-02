@@ -22,12 +22,11 @@
 
 .byebug_history
 
-# Ignore secrets
-/config/secrets.yml
-
-# Ignore encrypted secrets key file.
-config/secrets.yml.key
-config/secrets.yml.enc
-
 # Ignore .DS_Store from OS X
 .DS_Store
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore credentials file. You want to set this up to use your db? Generate your own credentials file with 'rails credentials:edit'.
+/config/credentials.yml.enc
