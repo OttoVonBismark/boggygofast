@@ -23,7 +23,7 @@ gem 'listen', '>= 3.0.5', '< 3.2'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6'
 end
 
 group :development do
