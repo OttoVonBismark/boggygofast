@@ -25,17 +25,17 @@ class SpeedrunsController < ApplicationController
 
     # Edits and Updates don't work properly due to what might be a memory leak outside my control. (Rails loses track of what specifically it's operating on).
     # Will attempt a fix with the next Rails update.
-    # def edit
-    # end
+    def edit
+    end
 
-    # def update
-    #     if @speedrun.update_attributes(speedrun_params)
-    #         flash[:success] = "Update successful"
-    #         redirect_to @speedrun
-    #     else
-    #         render 'edit'
-    #     end
-    # end
+    def update
+        if @speedrun.update_attributes(speedrun_params)
+            flash[:success] = "Update successful"
+            redirect_to @speedrun
+        else
+            render 'edit'
+        end
+    end
 
     def destroy
         Speedrun.find(params[:id]).destroy
