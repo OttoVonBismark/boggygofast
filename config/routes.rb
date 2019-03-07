@@ -23,8 +23,8 @@ Rails.application.routes.draw do
 
   delete  '/logout',              to: 'sessions#destroy'
   delete  '/games/:slug',         to: 'games#destroy'
-  # delete  '/run/:id',             to: 'speedruns#destroy'
-  # delete  '/category/:id'         to: 'runcats#destroy'
+  delete  '/run/:id',             to: 'speedruns#destroy'
+  delete  '/category/:id',        to: 'runcats#destroy'
 
   scope '/games' do
     # It would be too easy to let Rails route things for speedruns.

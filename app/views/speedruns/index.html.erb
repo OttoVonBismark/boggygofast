@@ -6,7 +6,7 @@
     <% @game.runcats.each do |runcat| %>
         <% rcid = runcat.id %>
         <div class="tableZone">
-            <h4 align='center' class="categoryHead"><%= runcat.category %></h4>
+            <h4 align='center' class="categoryHead"><%= link_to(runcat.category, runcat_path(runcat.id)) %></h4>
             <table>
                 <tr class="tableHead">
                     <td>Rank</td>
@@ -20,7 +20,7 @@
                     <tr>
                         <td><%= speed_rank %>
                         <td><%= run.runner_name %></td>
-                        <td><%= run.run_time %></td>
+                        <td><%= link_to(run.run_time, speedrun_path(run.id)) %></td>
                         <td><%= run.date_finished %></td>
                         <td><%= run.run_notes %></td>
                     </tr>

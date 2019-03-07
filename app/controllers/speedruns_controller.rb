@@ -4,6 +4,10 @@ class SpeedrunsController < ApplicationController
     before_action :load_game
 
     def show
+        @speedrun = Speedrun.find(params[:id])
+
+        rcid = @speedrun.runcat_id
+        @runcat = Runcat.find_by_id(rcid)
     end
 
     def index
@@ -38,9 +42,11 @@ class SpeedrunsController < ApplicationController
     end
 
     def destroy
-        Speedrun.find(params[:id]).destroy
-        flash[:success] = "Run deleted"
-        redirect_to games_index # Update me
+        @speedrun = Speedrun.find(params[:id])
+        parent_index = speedruns_path(@speedrun.game.slug)
+        @speedrun.destroy
+        flash[:success] = "Run deleted successfully"
+        redirect_to parent_index
     end
 
     def retrieve_runs_by_category(rcid)

@@ -38,9 +38,11 @@ class RuncatsController < ApplicationController
     end
 
     def destroy
-        Runcat.find(params[:id]).destroy
+        @runcat = Runcat.find(params[:id])
+        parent_index = runcats_path(@runcat.game.slug)
+        @runcat.destroy
         flash[:success] = "Category deleted successfully"
-        redirect_to runcats_path
+        redirect_to parent_index
     end
 
 

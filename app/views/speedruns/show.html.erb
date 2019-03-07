@@ -1,3 +1,32 @@
-<% provide(:title, "Something witty" ) %>
-<h1>Make sure to add @speedrun to the controller!</h1>
-<p>I should put something clever here.</p>
+<% provide(:title, @speedrun.game.name + " " + @runcat.category + 
+    " in " + @speedrun.run_time + " by " + @speedrun.user.name) %>
+<h1><%= @speedrun.game.name + " " + @runcat.category + " in " + @speedrun.run_time + " by " + @speedrun.user.name %></h1>
+<% begin %>
+    <% if current_user.admin? %>
+        <h2>
+            <%= link_to("Edit |", edit_speedrun_path(@speedrun.id))%>
+            <%= link_to("Delete", @speedrun, method: :delete, data: {confirm: "Are you sure?"})%>
+            <!-- Throw a validate toggle here -->
+        </h2>
+    <% end %>
+<% rescue %>
+    <% nil %>
+<% end %>
+<div class="tableZone">
+    <table>
+        <tr class="tableHead">
+            <td>Runner</td>
+            <td>Time</td>
+            <td>Date Finished</td>
+            <td>Run Notes</td>
+            <td>Valid?</td>
+        </tr>
+        <tr>
+            <td><%= @speedrun.runner_name %>
+            <td><%= @speedrun.run_time %>
+            <td><%= @speedrun.date_finished %>
+            <td><%= @speedrun.run_notes %>
+            <td><%= @speedrun.is_valid %>
+        </tr>
+    </table>
+</div>
