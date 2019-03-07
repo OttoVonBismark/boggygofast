@@ -53,6 +53,8 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
     assert_template 'games/edit'
     patch game_path(@sonic), params: {game: {name: "", slug: ""}}
     assert_template 'games/edit'
+    refute_equal @sonic.name, ""
+    refute_equal @sonic.slug, ""
   end
 
   test 'successful edit with slug formatting' do

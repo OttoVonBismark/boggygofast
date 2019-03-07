@@ -1,9 +1,13 @@
 class SpeedrunsController < ApplicationController
-    before_action :admin_user,      only: [:destroy]
+    before_action :admin_user,      only: [:edit, :destroy]
     before_action :logged_in_user,  only: [:new, :create]
     before_action :load_game
 
     def show
+        @speedrun = Speedrun.find(params[:id])
+
+        rcid = @speedrun.runcat_id
+        @runcat = Runcat.find_by_id(rcid)
     end
 
     def index
@@ -23,24 +27,26 @@ class SpeedrunsController < ApplicationController
         end 
     end
 
-    # Edits and Updates don't work properly due to what might be a memory leak outside my control. (Rails loses track of what specifically it's operating on).
-    # Will attempt a fix with the next Rails update.
-    # def edit
-    # end
+    def edit
+        @speedrun = Speedrun.find(params[:id])
+    end
 
-    # def update
-    #     if @speedrun.update_attributes(speedrun_params)
-    #         flash[:success] = "Update successful"
-    #         redirect_to @speedrun
-    #     else
-    #         render 'edit'
-    #     end
-    # end
+    def update
+        @speedrun = Speedrun.find(params[:id])
+        if @speedrun.update_attributes(speedrun_params)
+            flash[:success] = "Update successful"
+            redirect_to @speedrun
+        else
+            render 'edit'
+        end
+    end
 
     def destroy
-        Speedrun.find(params[:id]).destroy
-        flash[:success] = "Run deleted"
-        redirect_to games_index # Update me
+        @speedrun = Speedrun.find(params[:id])
+        parent_index = speedruns_path(@speedrun.game.slug)
+        @speedrun.destroy
+        flash[:success] = "Run deleted successfully"
+        redirect_to parent_index
     end
 
     def retrieve_runs_by_category(rcid)

@@ -1,0 +1,33 @@
+<% provide(:title, 'Edit Speedrun for ' + @speedrun.game.name) %>
+<h1>Edit Speedrun for <%= @speedrun.game.name %></h1>
+
+<div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <%= form_for(@speedrun) do |f| %>
+                <%= render 'shared/error_messages', object: f.object %>
+
+                <%= f.hidden_field :game_id, value: @speedrun.game.id %>
+                <%= f.hidden_field :user_id, value: @speedrun.user.id %>
+                <%= f.hidden_field :is_valid, value: false %>
+
+                <%= f.label :date_finished, "Date Finished" %>
+                <%= f.date_field :date_finished, class: 'form-control' %>
+
+                <%= f.label :runcat_id, "Category" %>
+                <%= f.collection_select :runcat_id, @speedrun.game.runcats.all, :id, :category, class: 'form-control' %>
+                <% # We're providing :runcat_id using the @speedrun.game.runcats.all method looking for :id for value and :category for label %>
+
+                <%= f.label :run_time_h, "Hours" %>
+                <%= f.number_field :run_time_h, min: 00, max: 9, value: 9, class: 'form-control' %>
+                <%= f.label :run_time_m, "Minutes" %>
+                <%= f.number_field :run_time_m, min: 00, max: 59, value: 59, class: 'form-control' %>
+                <%= f.label :run_time_s, "Seconds" %>
+                <%= f.number_field :run_time_s, min: 00, max: 59, value: 59, class: 'form-control' %>
+
+                <%= f.label :run_notes, "Run Notes" %>
+                <%= f.text_area :run_notes, class: 'form-control' %>
+
+                <%= f.submit "Submit Speedrun", class: 'btn btn-primary' %>
+            <% end %>
+        </div>
+    </div>

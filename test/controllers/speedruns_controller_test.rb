@@ -3,10 +3,10 @@ require 'test_helper'
 class SpeedrunsControllerTest < ActionDispatch::IntegrationTest
     def setup
         @game = games(:sonic)
-        @runcat = runcats(:sonic_anyperc)
         @speedrun = speedruns(:sonic_1)
 
-        @user = users(:michael)
+        @admin_user = users(:michael)
+        @user = users(:archer)
     end
 
     # General page gets
@@ -28,5 +28,18 @@ class SpeedrunsControllerTest < ActionDispatch::IntegrationTest
     test "should redirect non-logged-in users from new speedrun page" do
         get new_game_speedrun_path(@game.slug)
         assert_redirected_to login_url
+    end
+
+    # Editing page gets
+    test "admins should get edit page" do
+        log_in_as @admin_user
+        get edit_speedrun_path(@speedrun.id)
+        assert_response :success
+    end
+
+    test "non-admins should not get edit page" do
+        log_in_as @user
+        get edit_speedrun_path(@speedrun.id)
+        assert_redirected_to root_url
     end
 end

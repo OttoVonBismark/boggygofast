@@ -1,18 +1,27 @@
 <% provide(:title, 'Categories for ' + @game.name) %>
 <h1>Categories for <%= @game.name %></h1>
 
+<% begin %>
+    <% if current_user.admin? %>
+        <h2>Admins can create new categories <%= link_to "here", new_game_runcat_path %></h2>
+    <% end %>
+<% rescue %>
+    <% nil %>
+<% end %>
+
 <% if @game.runcats.count > 0 %>
     <% @game.runcats.each do |runcat| %>
-        <h3><%= runcat.category %></h3>
+        <h3><%= link_to(runcat.category, runcat_path(runcat.id)) %></h3>
+        <% begin %>
+            <% if current_user.admin? %>
+                <%= link_to("Edit | ", edit_runcat_path(runcat.id)) %>
+                <%= link_to("Delete", runcat, method: :delete, data: {confirm: "Are you sure?"}) %>
+            <% end %>
+        <% rescue %>
+            <% nil %>
+        <% end %>
         <p><%= runcat.rules %></p>
     <% end %>
 <% else %>
     <p>No categories to list.</p>
-<% end %>
-<% begin %>
-    <% if current_user.admin? %>
-        <p>Admins can create new categories <%= link_to "here", new_game_runcat_path %></p>
-    <% end %>
-<% rescue %>
-    <% nil %>
 <% end %>

@@ -1,0 +1,14 @@
+<% provide(:title, @runcat.game.name + " - " + @runcat.category) %>
+<h1>The <%= @runcat.category %> category for <%= @runcat.game.name %></h1>
+<% begin %>
+    <% if current_user.admin? %>
+        <h2>
+            <%= link_to("Edit | ", edit_runcat_path(@runcat.id)) %>
+            <%= link_to("Delete", @runcat, method: :delete, data: {confirm: "Are you sure?"})%>
+        </h2>
+    <% end %>
+<% rescue %>
+    <% nil %>
+<% end %>
+<p>Rules: <%= @runcat.rules %></p>
+<%= link_to("Go back", :back) %>

@@ -1,0 +1,23 @@
+<% provide(:title, 'Edit the ' + @runcat.game.name + 'Category, ' + @runcat.category) %>
+<h1>Editing the <%= @runcat.category %> category for <%= @runcat.game.name %></h1>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <%= form_for @runcat do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+
+            <%= f.label :category %>
+            <%= f.text_field :category, class: 'form-control', placeholder: "any%" %>
+
+            <%= f.label :rules %>
+            <%= f.text_field :rules, class: 'form-control', placeholder: "rules go here" %>
+
+            <%= f.hidden_field :game_id, value: @runcat.game.id %>
+
+            <%= f.submit "Update Category", class: 'btn btn-primary' %>
+        <% end %>
+        <h3>A Note on Categories</h3>
+        <p>Be sure to make your rules clear and concise so viewers can understand them.
+        This will cut down on invalidated runs due to rule breakage if the runner failed to understand the rules.</p>
+    </div>
+</div>
