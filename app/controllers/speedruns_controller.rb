@@ -1,5 +1,5 @@
 class SpeedrunsController < ApplicationController
-    before_action :admin_user,      only: [:destroy]
+    before_action :admin_user,      only: [:edit, :destroy]
     before_action :logged_in_user,  only: [:new, :create]
     before_action :load_game
 
@@ -26,6 +26,7 @@ class SpeedrunsController < ApplicationController
     # Edits and Updates don't work properly due to what might be a memory leak outside my control. (Rails loses track of what specifically it's operating on).
     # Will attempt a fix with the next Rails update.
     def edit
+        @speedrun = Speedrun.find(params[:id])
     end
 
     def update

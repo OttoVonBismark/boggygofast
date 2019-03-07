@@ -10,14 +10,15 @@ Rails.application.routes.draw do
   get     '/admin/newgame',       to: 'games#new',              as: :new_game
   get     '/games/:slug/edit',    to: 'games#edit',             as: :edit_game
   
-  get     '/speedruns/:id/edit',  to: 'speedruns#edit',         as: :edit_speedrun
+  get     '/run/:id',             to: 'speedruns#show',         as: :speedrun
+  get     '/run/:id/edit',        to: 'speedruns#edit',         as: :edit_speedrun
 
   post    '/login',               to: 'sessions#create'
   post    '/games',               to: 'games#create'
 
   patch   '/games/:slug',         to: 'games#update'
   
-  patch   '/speedruns/:id',  to: 'speedruns#update'
+  patch   '/run/:id',             to: 'speedruns#update'
 
   delete  '/logout',              to: 'sessions#destroy'
   delete  '/games/:slug',         to: 'games#destroy'
