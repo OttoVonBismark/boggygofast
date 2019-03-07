@@ -3,7 +3,6 @@ require 'test_helper'
 class SpeedrunsControllerTest < ActionDispatch::IntegrationTest
     def setup
         @game = games(:sonic)
-        @runcat = runcats(:sonic_anyperc)
         @speedrun = speedruns(:sonic_1)
 
         @admin_user = users(:michael)
