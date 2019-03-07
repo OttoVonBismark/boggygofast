@@ -118,6 +118,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     category = "glitchless"
     rules = "Beat the game without using glitches"
     patch runcat_path(@runcat.id), params: {runcat: {category: category, rules: rules}}
+    refute flash.empty?
     @runcat.reload
     assert_equal category, @runcat.category
     assert_equal rules, @runcat.rules

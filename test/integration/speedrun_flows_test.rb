@@ -61,8 +61,10 @@ class SpeedrunFlowsTest < ActionDispatch::IntegrationTest
     run_time_m = 42
     run_time_s = 11
     run_notes = "I got edited successfully!"
-    patch speedrun_path(@speedrun), params: {speedrun: {game_name: game_name, user_name: user_name, is_valid: is_valid, date_finished: date_finished, runcat_id: runcat_id, 
-        run_time_h: run_time_h, run_time_m: run_time_m, run_time_s: run_time_s, run_notes: run_notes}}
+    patch speedrun_path(@speedrun), params: {speedrun: {game_name: game_name, 
+      user_name: user_name, is_valid: is_valid, date_finished: date_finished, 
+      runcat_id: runcat_id, run_time_h: run_time_h, run_time_m: run_time_m, 
+      run_time_s: run_time_s, run_notes: run_notes}}
     refute flash.empty?
     @speedrun.reload
     assert_redirected_to @speedrun
