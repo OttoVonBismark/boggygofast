@@ -30,17 +30,14 @@ class SpeedrunsControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to login_url
     end
 
-    # Child model editing tests
     # Editing page gets
     test "admins should get edit page" do
-        # skip "Skipping this so I can commit this test as a checkpoint."
         log_in_as @admin_user
         get edit_speedrun_path(@speedrun.id)
         assert_response :success
     end
 
     test "non-admins should not get edit page" do
-        # skip "Skipping this so I can commit this test as a checkpoint."
         log_in_as @user
         get edit_speedrun_path(@speedrun.id)
         assert_redirected_to root_url

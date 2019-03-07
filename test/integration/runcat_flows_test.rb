@@ -11,20 +11,20 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     @castlevania = games(:castlevania)
 
     @speedrun = speedruns(:sonic_1)
-    @runcatorama = runcats(:sonic_anyperc)
+    @runcat = runcats(:sonic_anyperc)
   end
 
   # Sanity checks that should not be here but are because I'm in charge.
   test "runcat ID and speedrun.runcat_id should be equal" do
-    assert_equal @runcatorama.id, @speedrun.runcat_id
+    assert_equal @runcat.id, @speedrun.runcat_id
   end
 
   test "runcat.game_id and game ID should be equal" do
-    assert_equal @sonic.id, @runcatorama.game_id
+    assert_equal @sonic.id, @runcat.game_id
   end
 
   # Index tests
-  test "should get index for game with categories" do
+  test "should get runcats index for game with categories" do
     get runcats_path(@sonic.slug)
     assert_template
     assert_select 'h1', text: "Categories for " + @sonic.name, count: 1
@@ -36,7 +36,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_game_runcat_path(@sonic.slug), text: "here", count: 0
   end
 
-  test "should get index for game with categories as admin with admin-only links" do
+  test "should get runcats index for game with categories as admin with admin-only links" do
     log_in_as(@admin)
     get runcats_path(@sonic.slug)
     assert_template
@@ -49,10 +49,16 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_game_runcat_path(@sonic.slug), text: "here", count: 1
   end
 
-  test "should get index for game with no categories" do
+  test "should get runcats index for game with no categories" do
     get runcats_path(@castlevania.slug)
     assert_template
     assert_select 'p', text: "No categories to list.", count: 1
+  end
+
+  # Show Runcat tests
+  test "everyone should get runcat show page" do
+    get runcat_path(@runcat.id)
+    assert_template
   end
 
   # New Runcats tests
@@ -68,5 +74,81 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
-  # Here's where I'd do integration testing for admins creating new runcats... if params was a thing that worked. Oh well.
+  test "runcat should reject invalid input" do
+    log_in_as(@admin)
+    get new_game_runcat_path(@castlevania.slug)
+    assert_template
+    category = "" # Cannot be blank
+    rules = false # NO RULES NO MASTERS!
+    assert_no_difference 'Runcat.count' do
+      post runcats_path, params: {runcat: {category: category, rules: rules}}
+    end
+  end
+
+  test "runcat should accept valid input" do
+    log_in_as(@admin)
+    get new_game_runcat_path(@castlevania.slug)
+    assert_template
+    category = "glitchless"
+    rules = "Beat the game without using glitches"
+    assert_difference 'Runcat.count', 1 do
+      post runcats_path, params: {runcat: {category: category, rules: rules}}
+    end
+  end
+
+  # Edit Runcat tests
+  test "admins should get runcat edit page" do
+    log_in_as(@admin)
+    get edit_runcat_path(@runcat.id)
+    assert_response :success
+    assert_template
+  end
+
+  test "non-admins should not get runcat edit page" do
+    log_in_as(@non_admin)
+    get edit_runcat_path(@runcat.id)
+    assert_redirected_to root_url
+  end
+
+  test "successful runcat edit" do
+    log_in_as(@admin)
+    get edit_runcat_path(@runcat.id)
+    assert_response :success
+    assert_template
+    category = "glitchless"
+    rules = "Beat the game without using glitches"
+    patch runcat_path(@runcat.id), params: {runcat: {category: category, rules: rules}}
+    @runcat.reload
+    assert_equal category, @runcat.category
+    assert_equal rules, @runcat.rules
+  end
+
+  test "unsuccessful runcat edit" do
+    log_in_as(@admin)
+    get edit_runcat_path(@runcat.id)
+    assert_response :success
+    assert_template
+    category = "" # Let's be as nebulous about the run as humanly possible.
+    rules = 3 # I hear it's a magical number.
+    patch runcat_path(@runcat.id), params: {runcat: {category: category, rules: rules}}
+    @runcat.reload
+    refute_equal category, @runcat.category
+    refute_equal rules, @runcat.rules
+  end
+
+  # Delete Runcat tests
+  test "admins can delete runcats" do
+    log_in_as(@admin)
+    assert_difference "Runcat.count", -1 do
+      delete runcats_path(@sonic.slug, @runcat.id)
+    end
+  end
+
+  test "non-admins cannot delete runcats" do
+    log_in_as(@non_admin)
+    assert_no_difference "Runcat.count" do
+      delete runcats_path(@sonic.slug, @runcat.id)
+    end
+  end
+
 end

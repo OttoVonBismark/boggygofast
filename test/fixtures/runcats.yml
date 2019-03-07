@@ -30,7 +30,7 @@ ori_anyperc:
   rules: Beat the game as fast as possible.
   game: ori
 
-ori_anyperc:
+ori_100perc:
   id: 6
   category: 100%
   rules: Beat the game as fast as possible, collecting all pickups.

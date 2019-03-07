@@ -49,7 +49,7 @@ class SpeedrunFlowsTest < ActionDispatch::IntegrationTest
   # Edit page tests
   # This test will be made more robust (check for page elements) later
   test "successful speedrun edit as admin" do
-    log_in_as @admin
+    log_in_as(@admin)
     get edit_speedrun_path(@speedrun)
     assert_template 'speedruns/edit'
     game_name = @speedrun.game.name # You don't want to touch this
@@ -78,7 +78,7 @@ class SpeedrunFlowsTest < ActionDispatch::IntegrationTest
   end
 
   test "unsuccessful speedrun edit as admin" do
-    log_in_as @admin
+    log_in_as(@admin)
     get edit_speedrun_path(@speedrun)
     assert_template 'speedruns/edit'
     game_name = "Spelunky" # YOU TOUCHED THE PARENTS! HOW COULD YOU!?

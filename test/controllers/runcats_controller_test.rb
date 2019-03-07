@@ -4,40 +4,56 @@ class RuncatsControllerTest < ActionDispatch::IntegrationTest
     def setup
         # Games
         @sonic = games(:sonic)
-        @metroid = games(:metroid)
 
-        # Runcats
-        @sonic_anyperc = runcats(:sonic_anyperc)
-        @sonic_100perc = runcats(:sonic_100perc)
-        @metroid_anyperc = runcats(:metroid_anyperc)
-        @metroid_100perc = runcats(:metroid_100perc)
+        # Runcat
+        @runcat = runcats(:ori_anyperc)
 
         # Users
-        @user = users(:michael)
-        @other_user = users(:archer)
+        @admin_user = users(:michael)
+        @user = users(:archer)
     end
 
     # General page gets
-    test "should get index" do
+    test "should get runcats index" do
         get runcats_path(@sonic.slug)
         assert_response :success
         assert_select "title", "Categories for Sonic Mania | BoggyGoFast Speedrun Archive"
     end
 
+    test "should get runcat show page" do
+        get runcat_path(@runcat.id)
+        assert_response :success
+        assert_select "title", "Ori and the Blind Forest - any% | BoggyGoFast Speedrun Archive"
+    end
+
     # Admin page gets
-    test "should get new for admins" do
-        log_in_as(@user)
-        assert @user.admin?
+    test "admins should get new runcats" do
+        log_in_as(@admin_user)
+        assert @admin_user.admin?
         get new_game_runcat_path(@sonic.slug)
         assert_response :success
         assert_select "title", "Create a New Category for Sonic Mania | BoggyGoFast Speedrun Archive"
     end
 
+    test "admins should get edit runcats" do
+        log_in_as(@admin_user)
+        assert @admin_user.admin?
+        get edit_runcat_path(@runcat.id)
+        assert_response :success
+    end
+
     # Non-Admin redirects
-    test "should redirect non-admins from new runcat page" do
-        log_in_as(@other_user)
-        refute @other_user.admin?
+    test "non-admins should get redirected from new runcat page" do
+        log_in_as(@user)
+        refute @user.admin?
         get new_game_runcat_path(@sonic.slug)
+        assert_redirected_to root_url
+    end
+
+    test "non-admins should get redirected from edit runcat page" do
+        log_in_as(@user)
+        refute @user.admin?
+        get edit_runcat_path(@runcat.id)
         assert_redirected_to root_url
     end
 end
