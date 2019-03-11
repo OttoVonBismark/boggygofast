@@ -86,6 +86,16 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
+  test "anonymous should get redirected from new game page" do
+    get new_game_path
+    assert_redirected_to login_url
+  end
+
+  test "anonymous should get redirected from edit game page" do
+    get edit_game_path(@sonic.slug)
+    assert_redirected_to login_url
+  end
+
   # Update
   test 'successful games edit with slug formatting' do
     log_in_as(@admin_user)
@@ -123,6 +133,12 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
   test "non-admins cannot delete games" do
     log_in_as(@user)
+    assert_no_difference 'Game.count' do
+      delete game_path(@sonic)
+    end
+  end
+
+  test "anonymous cannot delete games" do
     assert_no_difference 'Game.count' do
       delete game_path(@sonic)
     end

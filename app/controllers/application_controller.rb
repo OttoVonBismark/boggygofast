@@ -28,7 +28,11 @@ class ApplicationController < ActionController::Base
 
   # Confirms an Admin user.
   def admin_user
-    redirect_to(root_url) unless current_user.admin?
+    begin
+      redirect_to(root_url) unless current_user.admin?
+    rescue NoMethodError
+      redirect_to(login_url)
+    end
   end
   
   # Retrieves game information for it's child controllers.
