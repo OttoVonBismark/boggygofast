@@ -73,6 +73,7 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  # Show Page Tests
   # There are no conditional changes for whomever sees this page.
   test 'games show as anyone' do
     get game_path(@sonic.slug)
@@ -85,7 +86,8 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_game_speedrun_path(@sonic.slug)
   end
 
-  
+  # We already test for what happens when non-admins/anon try to access new/edit, so we're skipping that here.
+  # New Page Tests
   test 'games new as admin' do
     log_in_as(@admin_user)
     get new_game_path
@@ -97,8 +99,7 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'input[type=submit]', count: 1, value: "Create Game"
   end
 
-  # We've already tested redirects for non-admins. Skipping...
-
+  # Edit Page Tests
   test 'games edit as admin' do
     log_in_as(@admin_user)
     get edit_game_path(@sonic)
@@ -109,6 +110,4 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'form', count: 1
     assert_select 'input[type=submit]', count: 1, value: "Update Game"
   end
-
-  # Just like with New, we've already tested what happens when non-admins go to Edit.
 end

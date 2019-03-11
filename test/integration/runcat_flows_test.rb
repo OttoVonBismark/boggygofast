@@ -24,7 +24,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
   end
 
   # Index tests
-  test "admins should get runcats index for game with categories and admin-only links" do
+  test "admins runcats index integration with categories and admin-only links" do
     log_in_as(@admin_user)
     get runcats_path(@sonic.slug)
     assert_template 'runcats/index'
@@ -41,7 +41,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_game_runcat_path(@sonic.slug), text: "here", count: 1
   end
 
-  test 'users should get runcats index for games with categories' do
+  test 'users runcats index integration with categories' do
     log_in_as(@user)
     get runcats_path(@sonic.slug)
     assert_template 'runcats/index'
@@ -58,7 +58,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_game_runcat_path(@sonic.slug), text: "here", count: 0
   end
 
-  test "anonymous should get runcats index for game with categories" do
+  test "anonymous runcats index integration with categories" do
     get runcats_path(@sonic.slug)
     assert_template 'runcats/index'
     assert_response :success
@@ -74,7 +74,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', new_game_runcat_path(@sonic.slug), text: "here", count: 0
   end
 
-  test "admins should get runcats index for game with no categories with create new link" do
+  test "admins runcats index integrations with no categories with create new link" do
     log_in_as(@admin_user)
     get runcats_path(@castlevania.slug)
     assert_template 'runcats/index'
@@ -85,7 +85,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'p', text: "No categories to list.", count: 1
   end
 
-  test "users should get runcats index for game with no categories" do
+  test "users runcats index integrations with no categories" do
     log_in_as(@user)
     get runcats_path(@castlevania.slug)
     assert_template 'runcats/index'
@@ -96,7 +96,7 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
     assert_select 'p', text: "No categories to list.", count: 1
   end
 
-  test "anonymous should get runcats index for game with no categories" do
+  test "anonymous runcats index integrations with no categories" do
     get runcats_path(@castlevania.slug)
     assert_template 'runcats/index'
     assert_response :success
@@ -107,4 +107,62 @@ class RuncatFlowsTest < ActionDispatch::IntegrationTest
   end
 
   # Show Page Tests
+  test 'admin show page integration with edit and delete links' do
+    log_in_as(@admin_user)
+    get runcat_path(@runcat.id)
+    assert_template 'runcats/show'
+    assert_response :success
+    assert_select 'title', full_title(@runcat.game.name + " - " + @runcat.category)
+    assert_select 'h1', "The " + @runcat.category + " category for " + @runcat.game.name, count: 1
+    assert_select 'a[href=?]', edit_runcat_path(@runcat.id), text: "Edit |", count: 1
+    assert_select 'a[href=?]', runcat_path(@runcat.id), method: :delete, text: "Delete", count: 1
+    assert_select 'p', text: "Rules: " + @runcat.rules
+  end
+
+  test 'users show page integration' do
+    log_in_as(@user)
+    get runcat_path(@runcat.id)
+    assert_template 'runcats/show'
+    assert_response :success
+    assert_select 'title', full_title(@runcat.game.name + " - " + @runcat.category)
+    assert_select 'h1', "The " + @runcat.category + " category for " + @runcat.game.name, count: 1
+    assert_select 'a[href=?]', edit_runcat_path(@runcat.id), text: "Edit |", count: 0
+    assert_select 'a[href=?]', runcat_path(@runcat.id), method: :delete, text: "Delete", count: 0
+    assert_select 'p', text: "Rules: " + @runcat.rules
+  end
+
+  test 'anonymous show page integration' do
+    get runcat_path(@runcat.id)
+    assert_template 'runcats/show'
+    assert_response :success
+    assert_select 'title', full_title(@runcat.game.name + " - " + @runcat.category)
+    assert_select 'h1', "The " + @runcat.category + " category for " + @runcat.game.name, count: 1
+    assert_select 'a[href=?]', edit_runcat_path(@runcat.id), text: "Edit |", count: 0
+    assert_select 'a[href=?]', runcat_path(@runcat.id), method: :delete, text: "Delete", count: 0
+    assert_select 'p', text: "Rules: " + @runcat.rules
+  end
+
+  # New Page Tests (Only testing as admin, since controller tests already account for non-admins/anon)
+  test 'admins new page integration' do
+    log_in_as(@admin_user)
+    get new_game_runcat_path(@sonic.slug)
+    assert_template 'runcats/new'
+    assert_response :success
+    assert_select 'title', full_title("Create a New Category for " + @sonic.name)
+    assert_select 'h1', text: "Create a New Category", count: 1
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', value: "Add Category", count: 1
+  end
+
+  # Edit Page Tests
+  test 'admins edit page integration' do
+    log_in_as(@admin_user)
+    get edit_runcat_path(@runcat.id)
+    assert_template 'runcats/edit'
+    assert_response :success
+    assert_select 'title', full_title("Edit the " + @runcat.game.name + " Category, " + @runcat.category)
+    assert_select 'h1', text: "Editing the " + @runcat.category + " category for " + @runcat.game.name
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', value: "Update Category", count: 1
+  end
 end
