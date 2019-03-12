@@ -121,7 +121,6 @@ class RuncatsControllerTest < ActionDispatch::IntegrationTest
     end
 
     # Delete
-    # Delete Runcat tests
     test "admins can delete runcats" do
         log_in_as(@admin_user)
         assert_difference "Runcat.count", -1 do

@@ -4,56 +4,56 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   def setup
-    @admin = users(:michael)
-    @non_admin = users(:archer)
+    @admin_user = users(:michael)
+    @user = users(:archer)
   end
 
   # Index testing
-  test 'index as admin including pagination and delete links' do
-    log_in_as(@admin)
+  test 'user index integration as admin including pagination and delete links' do
+    log_in_as(@admin_user)
     get users_path
     assert_template 'users/index'
     assert_select 'div.pagination'
     first_page_of_users = User.paginate(page: 1)
     first_page_of_users.each do |user|
         assert_select 'a[href=?]', user_path(user), text: user.name
-        unless user == @admin
+        unless user == @admin_user
             assert_select 'a[href=?]', user_path(user), text: 'delete'
         end
     end
     assert_difference 'User.count', -1 do
-        delete user_path(@non_admin)
+        delete user_path(@user)
     end
   end
 
-  test 'index as non-admin' do
-    log_in_as(@non_admin)
+  test 'user index integration as non-admin' do
+    log_in_as(@user)
     get users_path
     assert_template 'users/index'
     assert_select 'a', text: 'delete', count: 0
   end
 
   # Edit tests
-  test 'unsuccessful edit' do
-    log_in_as(@admin)
-    get edit_user_path(@admin)
+  test 'unsuccessful user edit as admin' do
+    log_in_as(@admin_user)
+    get edit_user_path(@admin_user)
     assert_template 'users/edit'
-    patch user_path(@admin), params: {user: {name: "", email: "foo@invalid", password: "foo", password_confirmation: "bar"}}
+    patch user_path(@admin_user), params: {user: {name: "", email: "foo@invalid", password: "foo", password_confirmation: "bar"}}
     assert_template 'users/edit'
   end
 
-  test 'successful edit with friendly forwarding' do
-    get edit_user_path(@admin)
-    log_in_as(@admin)
-    assert_redirected_to edit_user_url(@admin)
+  test 'successful edit as admin with friendly forwarding' do
+    get edit_user_path(@admin_user)
+    log_in_as(@admin_user)
+    assert_redirected_to edit_user_url(@admin_user)
     name = "Foo Bar"
     email = "foo@bar.com"
-    patch user_path(@admin), params: {user: {name: name, email: email, password: "", password_confirmation: ""}}
+    patch user_path(@admin_user), params: {user: {name: name, email: email, password: "", password_confirmation: ""}}
     refute flash.empty?
-    assert_redirected_to @admin
-    @admin.reload
-    assert_equal name, @admin.name
-    assert_equal email, @admin.email
+    assert_redirected_to @admin_user
+    @admin_user.reload
+    assert_equal name, @admin_user.name
+    assert_equal email, @admin_user.email
   end
 
   # Login tests
@@ -69,14 +69,14 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
 
   test "login with valid information followed by logout" do
     get login_path
-    post login_path, params: {session: {email: @admin.email, password: 'password'}}
+    post login_path, params: {session: {email: @admin_user.email, password: 'password'}}
     assert is_logged_in?
-    assert_redirected_to @admin
+    assert_redirected_to @admin_user
     follow_redirect!
     assert_template 'users/show'
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
-    assert_select "a[href=?]", user_path(@admin)
+    assert_select "a[href=?]", user_path(@admin_user)
     delete logout_path
     refute is_logged_in?
     assert_redirected_to root_url
@@ -85,28 +85,28 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", logout_path,       count: 0
-    assert_select "a[href=?]", user_path(@admin),  count: 0
+    assert_select "a[href=?]", user_path(@admin_user),  count: 0
   end
 
   test "login with remembering" do
-    log_in_as(@admin, remember_me: '1')
+    log_in_as(@admin_user, remember_me: '1')
     refute_empty cookies['remember_token']
   end
 
   test "login without remembering" do
     # Log in to set the cookie.
-    log_in_as(@admin, remember_me: '1')
+    log_in_as(@admin_user, remember_me: '1')
     # Log in again to verify that the cookie is deleted.
-    log_in_as(@admin, remember_me: '0')
+    log_in_as(@admin_user, remember_me: '0')
     assert_empty cookies['remember_token']
   end
 
   # User profile testing
-  test "profile display" do
-    get user_path(@admin)
+  test "user show integration as admin" do
+    get user_path(@admin_user)
     assert_template 'users/show'
-    assert_select 'title', full_title(@admin.name)
-    assert_select 'h1', text: @admin.name
+    assert_select 'title', full_title(@admin_user.name)
+    assert_select 'h1', text: @admin_user.name
     assert_select 'h1>img.gravatar'
   end
 

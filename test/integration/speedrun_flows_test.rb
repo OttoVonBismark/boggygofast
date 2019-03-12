@@ -1,29 +1,75 @@
 require 'test_helper'
 
 class SpeedrunFlowsTest < ActionDispatch::IntegrationTest
+  include ApplicationHelper
+
   def setup
-    @admin = users(:michael)
-    @non_admin = users(:archer)
+    @admin_user = users(:michael)
+    @user = users(:archer)
 
     @sonic = games(:sonic)
     @castlevania = games(:castlevania)
 
     @speedrun = speedruns(:sonic_1)
+    @runcat = runcats(:sonic_anyperc)
   end
 
   # Sanity checks... probably shouldn't be here, but screw it.
   test "user id and speedrun.user_id should match" do
-    assert_equal @admin.id, @speedrun.user_id
+    assert_equal @admin_user.id, @speedrun.user_id
   end
 
   test "game id and speedrun.game_id should match" do
     assert_equal @sonic.id, @speedrun.game_id
   end
 
-  # Index tests
-  test "should get index for games with runs" do
+  # Show Tests
+  test 'speedruns show integration as admin' do
+    log_in_as(@admin_user)
+    get speedrun_path(@speedrun.id)
+    assert_template 'speedruns/show'
+    assert_response :success
+    assert_select 'title', full_title(@speedrun.game.name + " " + 
+      @runcat.category + " in " + @speedrun.run_time + " by " + 
+      @speedrun.user.name)
+    assert_select 'h1', text: @speedrun.game.name + " " + @runcat.category + " in " + @speedrun.run_time + " by " + @speedrun.user.name
+    assert_select 'a[href=?]', edit_speedrun_path(@speedrun.id), text: "Edit |", count: 1
+    assert_select 'a[href=?]', speedrun_path(@speedrun.id), text: "Delete", count: 1
+    assert_select 'table', count: 1
+  end
+
+  test 'speedruns show integration as user' do
+    log_in_as(@user)
+    get speedrun_path(@speedrun.id)
+    assert_template 'speedruns/show'
+    assert_response :success
+    assert_select 'title', full_title(@speedrun.game.name + " " + 
+      @runcat.category + " in " + @speedrun.run_time + " by " + 
+      @speedrun.user.name)
+    assert_select 'h1', text: @speedrun.game.name + " " + @runcat.category + " in " + @speedrun.run_time + " by " + @speedrun.user.name
+    assert_select 'a[href=?]', edit_speedrun_path(@speedrun.id), text: "Edit |", count: 0
+    assert_select 'a[href=?]', speedrun_path(@speedrun.id), text: "Delete", count: 0
+    assert_select 'table', count: 1
+  end
+
+  test 'speedruns show integration as anonymous' do
+    get speedrun_path(@speedrun.id)
+    assert_template 'speedruns/show'
+    assert_response :success
+    assert_select 'title', full_title(@speedrun.game.name + " " + 
+      @runcat.category + " in " + @speedrun.run_time + " by " + 
+      @speedrun.user.name)
+    assert_select 'h1', text: @speedrun.game.name + " " + @runcat.category + " in " + @speedrun.run_time + " by " + @speedrun.user.name
+    assert_select 'a[href=?]', edit_speedrun_path(@speedrun.id), text: "Edit |", count: 0
+    assert_select 'a[href=?]', speedrun_path(@speedrun.id), text: "Delete", count: 0
+    assert_select 'table', count: 1
+  end
+
+  # Index Tests
+  test "speedrun index integration as anyone with runs" do
     get speedruns_path(@sonic.slug)
-    assert_template
+    assert_template 'speedruns/index'
+    assert_response :success
     assert_equal 2, @sonic.speedruns.count
     assert_select 'h1', text: "Runs for " + @sonic.name, count: 1
     assert_select 'a[href=?]', new_game_speedrun_path, text: "here!", count: 1
@@ -38,73 +84,74 @@ class SpeedrunFlowsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should get index for games with no runs" do
+  test "speedrun index integration as anyone with no runs" do
     get speedruns_path(@castlevania.slug)
-    assert_template
+    assert_template 'speedruns/index'
+    assert_response :success
     assert_equal 0, @castlevania.speedruns.count
     assert_select 'h3', count: 1
     assert_select 'a[href=?]', new_game_speedrun_path, text: "submit a run!", count: 1
   end
 
-  # Edit page tests
-  # This test will be made more robust (check for page elements) later
-  test "successful speedrun edit as admin" do
-    log_in_as(@admin)
-    get edit_speedrun_path(@speedrun)
-    assert_template 'speedruns/edit'
-    game_name = @speedrun.game.name # You don't want to touch this
-    user_name = @speedrun.user.name # Or this
-    is_valid = true
-    date_finished = '2018-01-04'
-    runcat_id = 1
-    run_time_h = 01
-    run_time_m = 42
-    run_time_s = 11
-    run_notes = "I got edited successfully!"
-    patch speedrun_path(@speedrun), params: {speedrun: {game_name: game_name, 
-      user_name: user_name, is_valid: is_valid, date_finished: date_finished, 
-      runcat_id: runcat_id, run_time_h: run_time_h, run_time_m: run_time_m, 
-      run_time_s: run_time_s, run_notes: run_notes}}
-    refute flash.empty?
-    @speedrun.reload
-    assert_redirected_to @speedrun
-    assert_equal game_name, @speedrun.game.name
-    assert_equal user_name, @speedrun.user.name
-    assert_equal is_valid, @speedrun.is_valid
-    assert_equal date_finished.to_date, @speedrun.date_finished
-    assert_equal runcat_id, @speedrun.runcat_id
-    assert_equal run_time_h, @speedrun.run_time_h
-    assert_equal run_time_m, @speedrun.run_time_m
-    assert_equal run_time_s, @speedrun.run_time_s
-    assert_equal run_notes, @speedrun.run_notes
+  # New Tests
+  # Anonymous tests need not be created, as anon cannot access this page
+  # This behavior is already tested in the controller
+  test 'speedrun new integration as admin with categories present' do
+    log_in_as(@admin_user)
+    get new_game_speedrun_path(@sonic.slug)
+    assert_template 'speedruns/new'
+    assert_response :success
+    assert_select 'title', full_title("Submit a New Run for " + @sonic.name)
+    assert_select 'h1', text: "Submit a New Run for " + @sonic.name
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', value: "Submit Speedrun"
   end
 
-  test "unsuccessful speedrun edit as admin" do
-    log_in_as(@admin)
-    get edit_speedrun_path(@speedrun)
+  test 'speedrun new integration as user with categories present' do
+    log_in_as(@user)
+    get new_game_speedrun_path(@sonic.slug)
+    assert_template 'speedruns/new'
+    assert_response :success
+    assert_select 'title', full_title("Submit a New Run for " + @sonic.name)
+    assert_select 'h1', text: "Submit a New Run for " + @sonic.name
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', value: "Submit Speedrun"
+  end
+
+  test 'speedrun new integration as admin with categories not present' do
+    log_in_as(@admin_user)
+    get new_game_speedrun_path(@castlevania.slug)
+    assert_template 'speedruns/new'
+    assert_response :success
+    assert_equal 0, @castlevania.runcats.count
+    assert_select 'title', full_title("Submit a New Run for " + @castlevania.name)
+    assert_select 'h1', text: "Submit a New Run for " + @castlevania.name
+    assert_select 'a[href=?]', new_game_runcat_path(@castlevania.slug), count: 1
+    assert_select 'form', count: 0
+  end
+
+  test 'speedrun new integration as user with categories not present' do
+    log_in_as(@user)
+    get new_game_speedrun_path(@castlevania.slug)
+    assert_template 'speedruns/new'
+    assert_response :success
+    assert_equal 0, @castlevania.runcats.count
+    assert_select 'title', full_title("Submit a New Run for " + @castlevania.name)
+    assert_select 'h1', text: "Submit a New Run for " + @castlevania.name
+    assert_select 'a[href=?]', new_game_runcat_path(@castlevania.slug), count: 0
+    assert_select 'form', count: 0
+  end
+
+  # Edit Tests
+  # Admins only
+  test 'speedruns edit integration as admin' do
+    log_in_as(@admin_user)
+    get edit_speedrun_path(@speedrun.id)
     assert_template 'speedruns/edit'
-    game_name = "Spelunky" # YOU TOUCHED THE PARENTS! HOW COULD YOU!?
-    user_name = "Mister NoParents" # OH THE INHUMANITY!
-    is_valid = "" # You hear the Rust compiler screaming in the distance...
-    date_finished = "" # Ah yes, nil. A fine day that was.
-    runcat_id = "A spoon" # Haha! That's not a number, silly!
-    run_time_h = 99 # invalid unless < 10 by design
-    run_time_m = 61 # that's too many minutes!
-    run_time_s = 23445 # what the hell even is this?
-    run_notes = true # The best remarks for your run. "Yes."
-    patch speedrun_path(@speedrun), params: {speedrun: {game_name: game_name,
-      user_name: user_name, is_valid: is_valid, date_finished: date_finished, 
-      runcat_id: runcat_id, run_time_h: run_time_h, run_time_m: run_time_m,
-      run_time_s: run_time_s, run_notes: run_notes}}
-    @speedrun.reload
-    refute_equal game_name, @speedrun.game.name
-    refute_equal user_name, @speedrun.user.name
-    refute_equal is_valid, @speedrun.is_valid
-    refute_equal date_finished.to_date, @speedrun.date_finished
-    refute_equal runcat_id, @speedrun.runcat_id
-    refute_equal run_time_h, @speedrun.run_time_h
-    refute_equal run_time_m, @speedrun.run_time_m
-    refute_equal run_time_s, @speedrun.run_time_s
-    refute_equal run_notes, @speedrun.run_notes
+    assert_response :success
+    assert_select 'title', full_title("Edit Speedrun for " + @speedrun.game.name)
+    assert_select 'h1', text: "Edit Speedrun for " + @speedrun.game.name
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', value: "Update Speedrun"
   end
 end
