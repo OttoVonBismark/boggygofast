@@ -20,4 +20,8 @@ class RuncatTest < ActiveSupport::TestCase
     refute @runcat.valid?
   end
 
+  test "runcat.get_category method should yield category" do
+    assert_equal @runcat.get_category, "any%"
+  end
+
 end

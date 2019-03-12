@@ -1,25 +1,28 @@
 require 'test_helper'
 
 class GameFlowsTest < ActionDispatch::IntegrationTest
-  
+  include ApplicationHelper
+
   def setup
-    @admin = users(:michael)
-    @non_admin = users(:archer)
+    @admin_user = users(:michael)
+    @user = users(:archer)
 
     @sonic = games(:sonic)
   end
 
   # Index testing
-  test 'index as admin including edit and delete links' do
-    log_in_as(@admin)
+  test 'games index as admin including edit and delete links' do
+    log_in_as(@admin_user)
     get games_path
     assert_template 'games/index'
+    assert_response :success
+    assert_select 'title', full_title("List of Games")
     game_collection = Game.all
     game_collection.each do |game|
       assert_select 'a[href=?]', speedruns_path(game.slug), text: game.name
       assert_select 'a[href=?]', game_path(game), text: "| Game Info"
       assert_select 'a[href=?]', runcats_path(game.slug), text: "| Categories"
-      unless @admin.admin?
+      unless @admin_user.admin?
         assert_select 'a[href=?]', new_game_runcat_path(game.slug), text: "| New Category"
         assert_select 'a[href=?]', edit_game_path(game.slug), text: "| Edit Game"
         assert_select 'a[href=?]', game_path(game.slug), text: "| Delete"
@@ -31,82 +34,80 @@ class GameFlowsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'index as non-admin' do
-    log_in_as(@non_admin)
+  test 'games index as non-admin' do
+    log_in_as(@user)
     get games_path
     assert_template 'games/index'
+    assert_response :success
+    assert_select 'title', full_title("List of Games")
     game_collection = Game.all
     game_collection.each do |game|
       assert_select 'a[href=?]', speedruns_path(game.slug), text: game.name
       assert_select 'a[href=?]', game_path(game), text: "| Game Info"
       assert_select 'a[href=?]', runcats_path(game.slug), text: "| Categories"
+      assert_select 'a', {count: 0, text: "| New Category"}
+      assert_select 'a', {count: 0, text: "| Edit Game"}
+      assert_select 'a', {count: 0, text: "| Delete"}
     end
     assert_no_difference 'Game.count' do
       delete game_path(@sonic)
     end
   end
 
-  # Edit tests
-  test "unsuccessful edit" do
-    log_in_as(@admin)
-    get edit_game_path(@sonic)
-    assert_template 'games/edit'
-    patch game_path(@sonic), params: {game: {name: "", slug: ""}}
-    assert_template 'games/edit'
-    refute_equal @sonic.name, ""
-    refute_equal @sonic.slug, ""
+  test 'games index as anonymous' do
+    get games_path
+    assert_template 'games/index'
+    assert_response :success
+    assert_select 'title', full_title("List of Games")
+    game_collection = Game.all
+    game_collection.each do |game|
+      assert_select 'a[href=?]', speedruns_path(game.slug), text: game.name
+      assert_select 'a[href=?]', game_path(game), text: "| Game Info"
+      assert_select 'a[href=?]', runcats_path(game.slug), text: "| Categories"
+      assert_select 'a', {count: 0, text: "| New Category"}
+      assert_select 'a', {count: 0, text: "| Edit Game"}
+      assert_select 'a', {count: 0, text: "| Delete"}
+    end
+    assert_no_difference 'Game.count' do
+      delete game_path(@sonic)
+    end
   end
 
-  test 'successful edit with slug formatting' do
-    log_in_as(@admin)
-    get edit_game_path(@sonic)
-    assert_template 'games/edit'
-    name = "Sonic Forces"
-    slug = "sOnIc_FoRcEs"
-    info = "This is a game"
-    patch game_path(@sonic), params: {game: {name: name, slug: slug, info: info}}
-    refute flash.empty?
-    @sonic.reload
-    assert_redirected_to @sonic
-    assert_equal name, @sonic.name
-    assert_equal "sonic_forces", @sonic.slug
-    assert_equal info, @sonic.info
-  end
-
-  # New Game tests
-  # test "successful add game as admin" do # This doesn't work due to params being params (NoMethodError) despite looking IDENTICAL to the new users test.
-  #   log_in_as(@admin)
-  #   get new_game_path
-  #   assert_template 'games/new'
-  #   name = "Ori and the Will of the Wisps"
-  #   slug = "OrI_WotW"
-  #   info = "The sequel to Ori and the Blind Forest"
-  #   assert_difference 'Game.count', 1 do
-  #     post games_path, params: {game: {name: name, slug: slug, info: info}}
-  #   end
-  #   assert_redirected_to games_path
-  #   follow_redirect!
-  #   refute flash.empty?
-  #   ori_wotw = Game.find_by_slug(params[:ori_wotw])
-  #   assert_select 'a[href=?]', game_path(ori_wotw), text: name
-  # end
-
-  # Temporary until I figure out the above issue
-  test "admins should get new games" do
-    log_in_as(@admin)
-    get new_game_path
-    assert_template
-  end
-
-  test "non-admins should not get new games" do
-    log_in_as(@non_admin)
-    get new_game_path
-    assert_redirected_to root_url
-  end
-
-  # Show tests
-  test "should get show page" do
+  # Show Page Tests
+  # There are no conditional changes for whomever sees this page.
+  test 'games show as anyone' do
     get game_path(@sonic.slug)
-    assert_template
+    assert_template 'games/show'
+    assert_response :success
+    assert_select 'title', full_title(@sonic.name)
+    assert_select 'h1', text: @sonic.name
+    assert_select 'p', text: @sonic.info
+    assert_select 'a[href=?]', runcats_path(@sonic.slug)
+    assert_select 'a[href=?]', new_game_speedrun_path(@sonic.slug)
+  end
+
+  # We already test for what happens when non-admins/anon try to access new/edit, so we're skipping that here.
+  # New Page Tests
+  test 'games new as admin' do
+    log_in_as(@admin_user)
+    get new_game_path
+    assert_template 'games/new'
+    assert_response :success
+    assert_select 'title', full_title("Create a New Game")
+    assert_select 'h1', text: "Create a New Game"
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', count: 1, value: "Create Game"
+  end
+
+  # Edit Page Tests
+  test 'games edit as admin' do
+    log_in_as(@admin_user)
+    get edit_game_path(@sonic)
+    assert_template 'games/edit'
+    assert_response :success
+    assert_select 'title', full_title("Edit " + @sonic.name)
+    assert_select 'h1', text: "Edit " + @sonic.name
+    assert_select 'form', count: 1
+    assert_select 'input[type=submit]', count: 1, value: "Update Game"
   end
 end
