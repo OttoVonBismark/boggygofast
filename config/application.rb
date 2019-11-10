@@ -11,15 +11,11 @@ module Boggygofast
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    config.time_zone = 'Eastern Time (US & Canada)'
-    config.active_record.default_timezone = :local
+    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-    config.action_view.embed_authenticity_token_in_remote_forms = true
-
-    # Make sure SQLite adapter uses integers for booleans instead of t|f
-    config.active_record.sqlite3.represent_boolean_as_integer = true
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end
