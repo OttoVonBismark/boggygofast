@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails'
+gem 'rails', '~> 6.0.1'
 gem 'bcrypt'
 gem 'bootstrap-sass'
 gem 'jquery-rails'
@@ -15,7 +15,7 @@ gem 'bootstrap-will_paginate'
 gem 'puma', '~> 3.12'
 gem 'sassc-rails'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'friendly_id'
@@ -24,7 +24,8 @@ gem 'bootsnap'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'sqlite3', '~> 1.3.6'
+  gem 'sqlite3', '> 1.3.6'
+  gem 'rails-controller-testing', '>= 1.0.4'
 end
 
 group :development do
@@ -35,7 +36,6 @@ group :development do
 end
 
 group :test do
-  gem 'rails-controller-testing', '1.0.2'
   gem 'minitest-reporters', '1.1.14'
   gem 'guard'
   gem 'guard-minitest'
