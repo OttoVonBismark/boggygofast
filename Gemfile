@@ -21,10 +21,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'friendly_id'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'bootsnap'
+gem 'pg'
 
 group :development, :test do
   gem 'byebug', platform: :mri
-  gem 'sqlite3', '> 1.3.6'
   gem 'rails-controller-testing', '>= 1.0.4'
 end
 
@@ -39,10 +39,6 @@ group :test do
   gem 'minitest-reporters', '1.1.14'
   gem 'guard'
   gem 'guard-minitest'
-end
-
-group :production do
-  gem 'mysql2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
