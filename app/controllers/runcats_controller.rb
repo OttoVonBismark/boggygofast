@@ -29,7 +29,7 @@ class RuncatsController < ApplicationController
 
     def update
         @runcat = Runcat.find(params[:id])
-        if @runcat.update_attributes(runcat_params)
+        if @runcat.update(runcat_params)
             flash[:success] = "Update successful"
             redirect_to @runcat
         else

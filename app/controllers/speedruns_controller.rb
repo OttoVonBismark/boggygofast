@@ -33,7 +33,7 @@ class SpeedrunsController < ApplicationController
 
     def update
         @speedrun = Speedrun.find(params[:id])
-        if @speedrun.update_attributes(speedrun_params)
+        if @speedrun.update(speedrun_params)
             flash[:success] = "Update successful"
             redirect_to @speedrun
         else

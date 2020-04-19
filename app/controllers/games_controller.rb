@@ -30,7 +30,7 @@ class GamesController < ApplicationController
 
   def update
     @game = Game.find_by_slug(params[:slug])
-    if @game.update_attributes(game_params)
+    if @game.update(game_params)
       flash[:success] = "Game updated"
       @game = @game.reload
       redirect_to @game
